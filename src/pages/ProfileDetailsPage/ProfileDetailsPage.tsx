@@ -8,7 +8,7 @@ import styles from "./ProfileDetailsPage.module.css";
 import Preloader from "../../components/Preloader/Preloader";
 import { getReactionsData, getUserProfile } from "../../utils/api/api";
 import { TProfileDetailsID, TProfileID } from "../../utils/types";
-import { useLocation, useParams } from "react-router";
+import { useLocation } from "react-router";
 import FeedbackBlock from "../../components/FeedbackBlock/FeedbackBlock";
 import { AuthContext } from "../../services/AuthContext";
 
@@ -44,24 +44,33 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
   };
 
   //Получение ID пользователя
-  const { id } = useParams();
+  const id = useMemo(() => {
+    return location.pathname.split(":")[1] || null;
+  }, [location.pathname]);
+  
 
   useEffect(() => {
     //Для администратора
     if (id && state.isAdmin) {
       getUserProfile(id).then((resData: TProfileID) => {
         //Из другого места брать комменты для админа!!!!!
+        //На данный момент так, т.к. бекенд передает данные для одного и 
+        //того же элемента которые отличаются
         getReactionsData(id).then((resReactions) => {
           setUserData({ ...userData, data: resData, reactions: resReactions });
         });
       });
       //если карточка пренадлежит не пользвоателю и не администратору
-    } else if (id !== state.id) {
-      setUserData({
-        ...userData,
-        data: state.userData,
+    } else if (id && id !== state.id) {
+      getUserProfile(id).then((resData: TProfileID) => {
+        //Из другого места брать комменты для админа!!!!!
+        //На данный момент так, т.к. бекенд передает данные для одного и 
+        //того же элемента которые отличаются
+        getReactionsData(id).then((resReactions) => {
+          setUserData({ ...userData, data: resData, reactions: resReactions });
+        });
       });
-    } else if (id) {
+    } else if (id && id === state.id) {
       getUserProfile(id).then((resData: TProfileID) => {
         if (id) {
           getReactionsData(id).then((resReactions) => {
@@ -81,11 +90,10 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
       getUserProfile(id).then((res: TProfileID) => setUserData(res));
     }
   }, []);
-  console.log(userData);
 
   return (
     <div className={styles.profileDetailsContainer}>
-      {!userData ? (
+      {!userData.data ? (
         <Preloader />
       ) : (
         <>
@@ -117,6 +125,8 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 open={isOpen.photo}
                 userData={userData}
                 location={location.pathname}
+                size="forDetails"
+                
               />
               <img
                 className={`${styles.profileDetailsMainInfoImg} 
@@ -137,11 +147,14 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
               </div>
             </div>
             <div className={styles.profileDetailsMainInfoStatus}>
+            <div className={styles.profileDetailsMainInfoStatusFeedback}>
               <FeedbackBlock
                 open={isOpen.status}
                 userData={userData}
                 location={location.pathname}
+                size="forCards"
               />
+              </div>
               <div className={styles.profileDetailsMainInfoStatusIconContainer}>
                 {/* Цвет в зависимости от темы передаем в stroke:#100C34 или #FF00A8  */}
                 <StatusIcon

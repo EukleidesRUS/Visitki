@@ -49,7 +49,7 @@ const Card: FC<TCardProps> = ({ img, name, city, id, location }): JSX.Element =>
   return (
     <div className={styles.card}>
       <div className={styles.cardImgContainer}>
-        <Link to={`details/:${id}`}>
+        <Link style={{ display: 'flex' }} to={`details/:${id}`}>
           <img className={styles.cardImg} src={img} alt="ProfilePhoto" />
         </Link>
         <FeedbackBlock
