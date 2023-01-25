@@ -145,6 +145,8 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 open={isOpen.photo}
                 userData={userData}
                 location={location.pathname}
+                size="forDetails"
+                
               />
               <img
                 className={`${styles.profileDetailsMainInfoImg} 
@@ -165,11 +167,14 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
               </div>
             </div>
             <div className={styles.profileDetailsMainInfoStatus}>
+            <div className={styles.profileDetailsMainInfoStatusFeedback}>
               <FeedbackBlock
                 open={isOpen.status}
                 userData={userData}
                 location={location.pathname}
+                size="forCards"
               />
+              </div>
               <div className={styles.profileDetailsMainInfoStatusIconContainer}>
                 {/* Цвет в зависимости от темы передаем в stroke:#100C34 или #FF00A8  */}
                 <StatusIcon
@@ -205,6 +210,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 title="УВЛЕЧЕНИЯ"
                 image={userData.info.hobby.image}
                 description={userData.info.hobby.text}
+                userData={userData}
               />
             )}
             {userData.info.status && (
@@ -213,6 +219,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 title="СЕМЬЯ"
                 image={userData.info.status.image}
                 description={userData.info.status.text}
+                userData={userData}
               />
             )}
             {userData.info.job && (
@@ -220,6 +227,8 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="СФЕРА"
                 description={userData.info.job.text}
+                userData={userData}
+
               />
             )}
             {userData.info.edu && (
@@ -227,6 +236,8 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="УЧЕБА"
                 description={userData.info.edu.text}
+                userData={userData}
+
               />
             )}
           </div>

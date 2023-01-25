@@ -108,6 +108,14 @@
   position: relative;
 }
 
+.profileDetailsMainInfoStatusFeedback{
+  position: absolute;
+  display: flex;
+  width: 100%;
+  top: 60px;
+  right: 0px;
+}
+
 .profileDetailsMainInfoStatus:hover .profileDetailsMainInfoStatusIcon {
   visibility: visible;
 }

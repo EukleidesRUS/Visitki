@@ -1,6 +1,9 @@
 import React, { FC } from "react";
+import { useLocation } from "react-router";
 import imgBorderSolid from "../../images/BorderSolid.png";
 import imgBorderZig from "../../images/BorderZig.png";
+import { TProfileID } from "../../utils/types";
+import FeedbackBlock from "../FeedbackBlock/FeedbackBlock";
 import ChatIcon from "../Icons/ChatIcon/ChatIcon";
 import styles from "./ProfileDetailsOtherBlock.module.css";
 
@@ -9,6 +12,7 @@ type TProfileDetailsOtherBlock = {
   title?: string;
   image?: any;
   description?: string;
+  userData?:TProfileID | null;
 };
 
 const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
@@ -16,8 +20,14 @@ const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
   title,
   image,
   description,
+  userData
 }): JSX.Element => {
   const [isImg, setIsImg] = React.useState(false);
+  const [isOpenOtherFeedback, setIsOpenOtherFeedback] = React.useState(false);
+  const location = useLocation();
+  const openFeedbackInfoStatus = () => {
+    setIsOpenOtherFeedback(!isOpenOtherFeedback);
+  };
 
   React.useEffect(() => {
     if (image) {
@@ -43,9 +53,18 @@ const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
       <p className={styles.profileDetailsOtherBlockDescription}>
         {description}
       </p>
-      <div className={styles.profileDetailsOtherBlockChatIcon}>
+      <div
+        className={styles.profileDetailsOtherBlockChatIcon}
+        onClick={openFeedbackInfoStatus}
+      >
         <ChatIcon count={1} />
       </div>
+      <FeedbackBlock
+        userData={userData}
+        location={location.pathname}
+        open={isOpenOtherFeedback}
+        size="forDetails"
+      />
     </div>
   );
 };

@@ -14,7 +14,7 @@ const Card: FC<TCardProps> = ({ img, name, city, id }): JSX.Element => {
   //Данные хозяина карточки
   const [userData, setUserData] = useState<any | null>({
     data: null,
-    reactians: null,
+    reactions: null,
   });
   //данные авторизованного пользователя
   const { state } = useContext(AuthContext);
@@ -29,8 +29,8 @@ const Card: FC<TCardProps> = ({ img, name, city, id }): JSX.Element => {
       console.log("admin");
       getUserProfile(id).then((resData: TProfileID) => {
         //Из другого места брать комменты для админа!!!!!
-        getReactionsData(id).then((resReactians) => {
-          setUserData({ ...userData, data: resData, reactians: resReactians });
+        getReactionsData(id).then((resReactions) => {
+          setUserData({ ...userData, data: resData, reactions: resReactions });
         });
       });
       //если карточка пренадлежит не пользвоателю и не администратору
@@ -42,8 +42,8 @@ const Card: FC<TCardProps> = ({ img, name, city, id }): JSX.Element => {
     } else {
       //console.log("gost");
       getUserProfile(id).then((resData: TProfileID) => {
-        getReactionsData(id).then((resReactians) => {
-          setUserData({ ...userData, data: resData, reactians: resReactians });
+        getReactionsData(id).then((resReactions) => {
+          setUserData({ ...userData, data: resData, reactions: resReactions });
         });
       });
     }
@@ -52,7 +52,7 @@ const Card: FC<TCardProps> = ({ img, name, city, id }): JSX.Element => {
   return (
     <div className={styles.card}>
       <div className={styles.cardImgContainer}>
-        <Link to={`details/:${id}`}>
+        <Link style={{ display: 'flex' }} to={`details/:${id}`}>
           <img className={styles.cardImg} src={img} alt="ProfilePhoto" />
         </Link>
         <FeedbackBlock
@@ -68,7 +68,7 @@ const Card: FC<TCardProps> = ({ img, name, city, id }): JSX.Element => {
 
       <div className={styles.cardIcon} onClick={openFeedback}>
         <ChatIcon
-          count={userData.reactians ? userData.reactians.total : `${0}`}
+          count={userData.reactions ? userData.reactions.total : `${0}`}
         />
       </div>
     </div>
