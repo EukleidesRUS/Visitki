@@ -46,8 +46,6 @@ const FeedbackBlock: FC<TFeedbackBlock> = ({
     let reactionsForMainPage = null;
     let emotions = null;
     if (userData.reactions) {
-      console.log(userData.reactions);
-
       if (location === ("/" || `cohort/:${userData._id}`)) {
         //Для страницы main отображаются реакции к hobby хозяина выбранной карточки
         reactionsForMainPage = userData.reactions.items.filter(
@@ -69,6 +67,10 @@ const FeedbackBlock: FC<TFeedbackBlock> = ({
                 reactionsData: reactionsForMainPage,
               })
           : setReactions({ reactionsData: null, emotionsData: null });
+      } else {
+        //Для страницы профиля
+        reactionsForMainPage = userData.reactions.items 
+        console.log(reactionsForMainPage)
       }
     }
   }, [open]);
@@ -97,8 +99,8 @@ const FeedbackBlock: FC<TFeedbackBlock> = ({
         placeholder="Обратная связь"
       ></textarea>
       <div className={styles.feedbackReactions}>
-        {reactions.emotians &&
-          reactions.emotians.map((reaction: any, index: number) => (
+        {reactions.emotionsData &&
+          reactions.emotionsData.map((reaction: any, index: number) => (
             <div key={index} className={styles.feedbackReaction}>
               <img
                 className={styles.feedbackReactionImg}
@@ -110,7 +112,7 @@ const FeedbackBlock: FC<TFeedbackBlock> = ({
               )}
             </div>
           ))}
-        {!reactions.emotians &&
+        {!reactions.emotionsData &&
           defaultReactionsArray.map((reaction: any, index: number) => (
             <div key={index} className={styles.feedbackReaction}>
               <img

@@ -24,6 +24,7 @@ export type TCardProps = {
   id: string,
   name: string,
   city: string
+  location: any
 }
 
 export type TAuth = {

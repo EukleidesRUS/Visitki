@@ -28,7 +28,7 @@ export const getDefaultProfiles = async () => {
 };
 
 //Запрос профиля конкретного пользователя.
-export const getUserProfile = async (id: string | null) => {
+export const getUserProfile = async (id: string ) => {
   return await request(`/profiles/${id}`, {
     method: "GET",
     headers: api.headers,

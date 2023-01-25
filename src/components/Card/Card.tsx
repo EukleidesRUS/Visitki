@@ -8,13 +8,12 @@ import { TCardProps, TProfileID } from "../../utils/types";
 import FeedbackBlock from "../FeedbackBlock/FeedbackBlock";
 import styles from "./Card.module.css";
 
-const Card: FC<TCardProps> = ({ img, name, city, id }): JSX.Element => {
-  const location = useLocation();
+const Card: FC<TCardProps> = ({ img, name, city, id, location }): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   //Данные хозяина карточки
   const [userData, setUserData] = useState<any | null>({
     data: null,
-    reactians: null,
+    reactions: null,
   });
   //данные авторизованного пользователя
   const { state } = useContext(AuthContext);
@@ -26,11 +25,10 @@ const Card: FC<TCardProps> = ({ img, name, city, id }): JSX.Element => {
   useEffect(() => {
     //Для администратора
     if (id && state.isAdmin) {
-      console.log("admin");
       getUserProfile(id).then((resData: TProfileID) => {
         //Из другого места брать комменты для админа!!!!!
-        getReactionsData(id).then((resReactians) => {
-          setUserData({ ...userData, data: resData, reactians: resReactians });
+        getReactionsData(id).then((resReactions) => {
+          setUserData({ ...userData, data: resData, reactions: resReactions });
         });
       });
       //если карточка пренадлежит не пользвоателю и не администратору
@@ -40,10 +38,9 @@ const Card: FC<TCardProps> = ({ img, name, city, id }): JSX.Element => {
         data: state.userData,
       });
     } else {
-      //console.log("gost");
       getUserProfile(id).then((resData: TProfileID) => {
-        getReactionsData(id).then((resReactians) => {
-          setUserData({ ...userData, data: resData, reactians: resReactians });
+        getReactionsData(id).then((resReactions) => {
+          setUserData({ ...userData, data: resData, reactions: resReactions });
         });
       });
     }
@@ -68,7 +65,7 @@ const Card: FC<TCardProps> = ({ img, name, city, id }): JSX.Element => {
 
       <div className={styles.cardIcon} onClick={openFeedback}>
         <ChatIcon
-          count={userData.reactians ? userData.reactians.total : `${0}`}
+          count={userData.reactions ? userData.reactions.total : `${0}`}
         />
       </div>
     </div>

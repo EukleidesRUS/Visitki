@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, SyntheticEvent, useMemo } from "react";
+import { FC, useState, useEffect, useContext, useMemo } from "react";
 import TelegramIcon from "../../components/Icons/TelegramIcon/TelegramIcon";
 import GitHubIcon from "../../components/Icons/GitHubIcon/GitHubIcon";
 import StatusIcon from "../../components/Icons/StatusIcon/StatusIcon";
@@ -6,14 +6,19 @@ import ChatIcon from "../../components/Icons/ChatIcon/ChatIcon";
 import ProfileDetailsOtherBlock from "../../components/ProfileDetailsOtherBlock/ProfileDetailsOtherBlock";
 import styles from "./ProfileDetailsPage.module.css";
 import Preloader from "../../components/Preloader/Preloader";
-import { getCommentsData, getUserProfile } from "../../utils/api/api";
+import { getReactionsData, getUserProfile } from "../../utils/api/api";
 import { TProfileDetailsID, TProfileID } from "../../utils/types";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import FeedbackBlock from "../../components/FeedbackBlock/FeedbackBlock";
+import { AuthContext } from "../../services/AuthContext";
 
 const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
+  const { state, setState } = useContext(AuthContext);
   const location = useLocation();
-  const [userData, setUserData] = useState<TProfileID | null>(null);
+  const [userData, setUserData] = useState<any | null>({
+    data: null,
+    reactions: null,
+  });
   //С сервера не приходят данные о теме.
   //Варианты для тестирования "default", "daring", "romantic".
   const [theme, setTheme] = useState({
@@ -27,6 +32,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
     photo: false,
   });
 
+  //Функция открытия/закрытия окна фидбека
   const openFeedback = (item: string) => {
     item === "status"
       ? !isOpen.status
@@ -38,78 +44,44 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
   };
 
   //Получение ID пользователя
-  const profileID = useMemo(() => {
-    return location.pathname.split(":")[1] || null;
-  }, [location.pathname]);
-
-  // const [commentsData, setCommentsData] = useState<any>({
-  //   isRequest: false,
-  //   hobby: null,
-  //   edu: null,
-  //   status: null,
-  //   job: null,
-  //   photo: null,
-  //   quote: null,
-  // });
-
-  // //Функция проверки есть ли комментарии
-  // const checkComments = (commentsData: TCommentsRequest) => {
-  //   return commentsData.items ? true : false;
-  // };
-
-  // //Функция фильтрации комментариев
-  // const filterComments = (target: string) => {
-  //   switch (target) {
-  //     case "hobby":
-  //       setCommentsData({ ...commentsData, hobby: target });
-  //       console.log("1");
-  //       break;
-  //     case "job":
-  //       setCommentsData({ ...commentsData, job: target });
-  //       console.log("2");
-  //       break;
-  //     case "status":
-  //       setCommentsData({ ...commentsData, status: target });
-  //       console.log("3");
-  //       break;
-  //     case "quote":
-  //       setCommentsData({ ...commentsData, quote: target });
-  //       console.log("4");
-  //       break;
-  //     case "photo":
-  //       setCommentsData({ ...commentsData, photo: target });
-  //       console.log("5");
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
-
-  // const getComments = useCallback(() => {
-  //   if (!commentsData.isRequest) {
-  //     getCommentsData().then((res) => {
-  //       if (checkComments(res)) {
-  //         const commentsDataArray = res.items;
-  //         for (let index = 0; index < commentsDataArray.length; index++) {
-  //           let commentData = commentsDataArray[index];
-  //           //Почините бекенд!
-  //           if (commentData.target === null) {
-  //             commentData.target = "photo"
-  //           }
-  //           filterComments(commentData.target);
-  //           console.log(commentsData)
-  //         }
-  //       }
-  //     });
-  //   }
-  //   console.log(commentsData);
-  // }, [profileID]);
+  const { id } = useParams();
 
   useEffect(() => {
-    if (profileID) {
-      getUserProfile(profileID).then((res: TProfileID) => setUserData(res));
+    //Для администратора
+    if (id && state.isAdmin) {
+      getUserProfile(id).then((resData: TProfileID) => {
+        //Из другого места брать комменты для админа!!!!!
+        getReactionsData(id).then((resReactions) => {
+          setUserData({ ...userData, data: resData, reactions: resReactions });
+        });
+      });
+      //если карточка пренадлежит не пользвоателю и не администратору
+    } else if (id !== state.id) {
+      setUserData({
+        ...userData,
+        data: state.userData,
+      });
+    } else if (id) {
+      getUserProfile(id).then((resData: TProfileID) => {
+        if (id) {
+          getReactionsData(id).then((resReactions) => {
+            setUserData({
+              ...userData,
+              data: resData,
+              reactions: resReactions,
+            });
+          });
+        }
+      });
     }
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      getUserProfile(id).then((res: TProfileID) => setUserData(res));
+    }
+  }, []);
+  console.log(userData);
 
   return (
     <div className={styles.profileDetailsContainer}>
@@ -120,21 +92,21 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
           <div className={styles.profileDetailsMain}>
             <div className={styles.profileDetailsMainInfo}>
               <h1 className={styles.profileDetailsMainInfoName}>
-                {userData.profile.name}
+                {userData.data.profile.name}
               </h1>
               <p className={styles.profileDetailsMainInfoTown}>
-                {userData.profile.city.name}
+                {userData.data.profile.city.name}
               </p>
               <div className={styles.profileDetailsMainInfoIcons}>
                 <a
                   className={styles.link}
-                  href={`https://t.me/s/${userData.profile.telegram}`}
+                  href={`https://t.me/s/${userData.data.profile.telegram}`}
                 >
                   <TelegramIcon />
                 </a>
                 <a
                   className={styles.link}
-                  href={`https://github.com/${userData.profile.github}`}
+                  href={`https://github.com/${userData.data.profile.github}`}
                 >
                   <GitHubIcon />
                 </a>
@@ -154,7 +126,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 (theme.profilePhotoStyle === "daring" &&
                   styles.profileDetailsMainInfoImgDaring)
               }`}
-                src={userData.profile.photo}
+                src={userData.data.profile.photo}
                 alt="ProfilePhoto"
               />
               <div
@@ -199,34 +171,38 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
           </div>
 
           <div className={styles.profileDetailsOther}>
-            {userData.info.hobby && (
+            {userData.data.info.hobby && (
               <ProfileDetailsOtherBlock
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="УВЛЕЧЕНИЯ"
-                image={userData.info.hobby.image}
-                description={userData.info.hobby.text}
+                image={userData.data.info.hobby.image}
+                description={userData.data.info.hobby.text}
+                userData={userData}
               />
             )}
-            {userData.info.status && (
+            {userData.data.info.status && (
               <ProfileDetailsOtherBlock
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="СЕМЬЯ"
-                image={userData.info.status.image}
-                description={userData.info.status.text}
+                image={userData.data.info.status.image}
+                description={userData.data.info.status.text}
+                userData={userData}
               />
             )}
-            {userData.info.job && (
+            {userData.data.info.job && (
               <ProfileDetailsOtherBlock
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="СФЕРА"
-                description={userData.info.job.text}
+                description={userData.data.info.job.text}
+                userData={userData}
               />
             )}
-            {userData.info.edu && (
+            {userData.data.info.edu && (
               <ProfileDetailsOtherBlock
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="УЧЕБА"
-                description={userData.info.edu.text}
+                description={userData.data.info.edu.text}
+                userData={userData}
               />
             )}
           </div>

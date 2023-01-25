@@ -6,6 +6,7 @@ import Card from "../../components/Card/Card";
 import { getDefaultProfiles } from "../../utils/api/api";
 import { TCards, TProfileID } from "../../utils/types";
 import Preloader from "../../components/Preloader/Preloader";
+import { useLocation } from "react-router";
 
 const data = [
   { city: "Все города" },
@@ -28,6 +29,7 @@ const MainPage: FC = (): JSX.Element => {
     users: null,
   });
   const sortRef: any = useRef(null);
+  const location = useLocation()
 
   // Открытие/закрытие фильтра
   const filterSet = () => {
@@ -110,6 +112,7 @@ const MainPage: FC = (): JSX.Element => {
               img={cardData.profile.photo}
               name={cardData.profile.name}
               city={cardData.profile.city.name}
+              location={location}
             />
           ))}
         </div>
