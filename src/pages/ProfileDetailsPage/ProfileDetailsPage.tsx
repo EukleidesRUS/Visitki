@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useContext, useMemo } from "react";
+import { FC, useState, useEffect, useMemo } from "react";
 import TelegramIcon from "../../components/Icons/TelegramIcon/TelegramIcon";
 import GitHubIcon from "../../components/Icons/GitHubIcon/GitHubIcon";
 import StatusIcon from "../../components/Icons/StatusIcon/StatusIcon";
@@ -10,19 +10,17 @@ import { getReactionsData, getUserProfile } from "../../utils/api/api";
 import { TProfileDetailsID, TProfileID } from "../../utils/types";
 import { useLocation } from "react-router";
 import FeedbackBlock from "../../components/FeedbackBlock/FeedbackBlock";
-import { AuthContext } from "../../services/AuthContext";
 
 const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
-  const { state, setState } = useContext(AuthContext);
   const location = useLocation();
-  const [userData, setUserData] = useState<any | null>({
+  const [profileData, setprofileData] = useState<any | null>({
     data: null,
     reactions: null,
   });
   //С сервера не приходят данные о теме.
   //Варианты для тестирования "default", "daring", "romantic".
   const [theme, setTheme] = useState({
-    profilePhotoStyle: "daring",
+    profilePhotoStyle: "default",
     statusColor: "default",
     borderDetailsOther: "default",
   });
@@ -47,74 +45,46 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
   const id = useMemo(() => {
     return location.pathname.split(":")[1] || null;
   }, [location.pathname]);
-  
 
-  useEffect(() => {
-    //Для администратора
-    if (id && state.isAdmin) {
-      getUserProfile(id).then((resData: TProfileID) => {
-        //Из другого места брать комменты для админа!!!!!
-        //На данный момент так, т.к. бекенд передает данные для одного и 
-        //того же элемента которые отличаются
-        getReactionsData(id).then((resReactions) => {
-          setUserData({ ...userData, data: resData, reactions: resReactions });
-        });
-      });
-      //если карточка пренадлежит не пользвоателю и не администратору
-    } else if (id && id !== state.id) {
-      getUserProfile(id).then((resData: TProfileID) => {
-        //Из другого места брать комменты для админа!!!!!
-        //На данный момент так, т.к. бекенд передает данные для одного и 
-        //того же элемента которые отличаются
-        getReactionsData(id).then((resReactions) => {
-          setUserData({ ...userData, data: resData, reactions: resReactions });
-        });
-      });
-    } else if (id && id === state.id) {
-      getUserProfile(id).then((resData: TProfileID) => {
-        if (id) {
-          getReactionsData(id).then((resReactions) => {
-            setUserData({
-              ...userData,
-              data: resData,
-              reactions: resReactions,
-            });
-          });
-        }
-      });
-    }
-  }, []);
-
+  //Отрисовка данных профиля студента
   useEffect(() => {
     if (id) {
-      getUserProfile(id).then((res: TProfileID) => setUserData(res));
+      getUserProfile(id).then((resData: TProfileID) => {
+        getReactionsData(id).then((resReactions) => {
+          setprofileData({
+            ...profileData,
+            data: resData,
+            reactions: resReactions,
+          });
+        });
+      });
     }
-  }, []);
+  }, [id]);
 
   return (
     <div className={styles.profileDetailsContainer}>
-      {!userData.data ? (
+      {!profileData.data ? (
         <Preloader />
       ) : (
         <>
           <div className={styles.profileDetailsMain}>
             <div className={styles.profileDetailsMainInfo}>
               <h1 className={styles.profileDetailsMainInfoName}>
-                {userData.data.profile.name}
+                {profileData.data.profile.name}
               </h1>
               <p className={styles.profileDetailsMainInfoTown}>
-                {userData.data.profile.city.name}
+                {profileData.data.profile.city.name}
               </p>
               <div className={styles.profileDetailsMainInfoIcons}>
                 <a
                   className={styles.link}
-                  href={`https://t.me/s/${userData.data.profile.telegram}`}
+                  href={`https://t.me/s/${profileData.data.profile.telegram}`}
                 >
                   <TelegramIcon />
                 </a>
                 <a
                   className={styles.link}
-                  href={`https://github.com/${userData.data.profile.github}`}
+                  href={`https://github.com/${profileData.data.profile.github}`}
                 >
                   <GitHubIcon />
                 </a>
@@ -123,10 +93,10 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
             <div className={styles.profileDetailsMainInfoImgContainer}>
               <FeedbackBlock
                 open={isOpen.photo}
-                userData={userData}
-                location={location.pathname}
+                profileData={profileData}
+                target="photo"
                 size="forDetails"
-                
+                location={location.pathname}
               />
               <img
                 className={`${styles.profileDetailsMainInfoImg} 
@@ -136,7 +106,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 (theme.profilePhotoStyle === "daring" &&
                   styles.profileDetailsMainInfoImgDaring)
               }`}
-                src={userData.data.profile.photo}
+                src={profileData.data.profile.photo}
                 alt="ProfilePhoto"
               />
               <div
@@ -147,13 +117,14 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
               </div>
             </div>
             <div className={styles.profileDetailsMainInfoStatus}>
-            <div className={styles.profileDetailsMainInfoStatusFeedback}>
-              <FeedbackBlock
-                open={isOpen.status}
-                userData={userData}
-                location={location.pathname}
-                size="forCards"
-              />
+              <div className={styles.profileDetailsMainInfoStatusFeedback}>
+                <FeedbackBlock
+                  open={isOpen.status}
+                  profileData={profileData}
+                  target="quote"
+                  size="forCards"
+                  location={location.pathname}
+                />
               </div>
               <div className={styles.profileDetailsMainInfoStatusIconContainer}>
                 {/* Цвет в зависимости от темы передаем в stroke:#100C34 или #FF00A8  */}
@@ -184,38 +155,42 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
           </div>
 
           <div className={styles.profileDetailsOther}>
-            {userData.data.info.hobby && (
+            {profileData.data.info.hobby && (
               <ProfileDetailsOtherBlock
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="УВЛЕЧЕНИЯ"
-                image={userData.data.info.hobby.image}
-                description={userData.data.info.hobby.text}
-                userData={userData}
+                target="hobby"
+                image={profileData.data.info.hobby.image}
+                description={profileData.data.info.hobby.text}
+                profileData={profileData}
               />
             )}
-            {userData.data.info.status && (
+            {profileData.data.info.status && (
               <ProfileDetailsOtherBlock
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="СЕМЬЯ"
-                image={userData.data.info.status.image}
-                description={userData.data.info.status.text}
-                userData={userData}
+                target="status"
+                image={profileData.data.info.status.image}
+                description={profileData.data.info.status.text}
+                profileData={profileData}
               />
             )}
-            {userData.data.info.job && (
+            {profileData.data.info.job && (
               <ProfileDetailsOtherBlock
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="СФЕРА"
-                description={userData.data.info.job.text}
-                userData={userData}
+                target="job"
+                description={profileData.data.info.job.text}
+                profileData={profileData}
               />
             )}
-            {userData.data.info.edu && (
+            {profileData.data.info.edu && (
               <ProfileDetailsOtherBlock
                 theme={theme.borderDetailsOther !== "default" ? true : false}
                 title="УЧЕБА"
-                description={userData.data.info.edu.text}
-                userData={userData}
+                target="edu"
+                description={profileData.data.info.edu.text}
+                profileData={profileData}
               />
             )}
           </div>

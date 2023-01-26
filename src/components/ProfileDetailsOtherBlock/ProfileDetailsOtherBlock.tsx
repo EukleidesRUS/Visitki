@@ -10,9 +10,10 @@ import styles from "./ProfileDetailsOtherBlock.module.css";
 type TProfileDetailsOtherBlock = {
   theme: boolean;
   title: string;
+  target: string;
   image?: any;
   description?: string;
-  userData?:TProfileID | null;
+  profileData?:TProfileID | null;
 };
 
 const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
@@ -20,14 +21,16 @@ const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
   title,
   image,
   description,
-  userData
+  profileData,
+  target
 }): JSX.Element => {
+
   const location = useLocation();
   const [isImg, setIsImg] = React.useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const openFeedback = () => {
-    isOpen ? setIsOpen(false) : setIsOpen(true);
+    setIsOpen(!isOpen)
   };
 
   React.useEffect(() => {
@@ -58,10 +61,11 @@ const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
         <ChatIcon count={1} />
       </div>
       <FeedbackBlock
-        userData={userData}
-        location={location.pathname}
+        profileData={profileData}
+        target={target}
         open={isOpen}
         size="forDetails"
+        location={location.pathname}
       />
     </div>
   );
