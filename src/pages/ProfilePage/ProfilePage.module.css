@@ -26,7 +26,7 @@
   max-width: 440px;
   flex-direction: column;
   gap: 16px;
-  margin: 0 auto;
+  margin: 0 auto 96px;
 }
 
 .photo__container {
@@ -35,35 +35,13 @@
   margin-right: auto;
 }
 
-.profile__button {
-  width: 100%;
-  display: flex;
-  border: 0;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 410px 0;
-  height: 60px;
-  background: linear-gradient(269.17deg, #3b23b7 30.28%, #c914e7 63.24%);
-  color: #f0f0f0;
-  border-radius: 4px;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: all 0.4s ease-in-out;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 28px;
-}
-
-.profile__button:hover {
-  opacity: 0.85;
-}
-
 .input__container {
   position: relative;
 }
 
 .input__label {
   position: relative;
+  cursor: url("../../icons/pointer_main.svg"), auto;
 }
 
 .input__title {
@@ -73,10 +51,10 @@
   font-size: 16px;
   line-height: 1.5;
   color: #100c34;
+  cursor: url("../../icons/pointer_main.svg"), auto;
 }
 
 .input {
-  padding: 14px 16px;
   width: 100%;
   max-height: 48px;
   border: 1px solid #100c34;
@@ -86,7 +64,8 @@
   font-size: 16px;
   line-height: 1.5;
   color: #100c34;
-  cursor: pointer;
+  cursor: url("../../icons/pointer_main.svg"), auto;
+  outline: none;
 }
 
 input:hover,
@@ -94,11 +73,14 @@ textarea:hover {
   border-color: #666;
 }
 
+
 input:focus,
 textarea:focus {
   border-color: #666;
   filter: drop-shadow(0px 0px 4px rgba(78, 59, 255, 0.25));
   outline: none;
+  resize: none;
+
 }
 
 .textarea {
@@ -114,6 +96,7 @@ textarea:focus {
   font-size: 16px;
   line-height: 1.5;
   color: #100c34;
+  resize: none;
 }
 
 .input__caption {
@@ -122,6 +105,7 @@ textarea:focus {
   padding-bottom: 10px;
   font-size: 14px;
   line-height: 18px;
+  cursor: url("../../icons/pointer_main.svg"), auto;
 }
 
 .textarea::placeholder,
@@ -144,6 +128,8 @@ textarea:focus {
 input[type="date"],
 textarea {
   position: relative;
+  resize: none;
+
 }
 
 .input__icon {
@@ -160,13 +146,38 @@ input[type="date"] + .input__icon {
   right: 15px;
 }
 
-input[type="file"] {
+input[type="avatar"] {
   display: none;
+}
+.input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+input[type="file"] {
+  content: 'Файл не выбран';
+  display: block;
+  outline: none;
+  position: relative;
+  padding: 14px 16px;
+  width: 100%;
+  max-height: 45px;
+  min-height: 40px;
+  background: #fff;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #100c34;
+  cursor: url("../../icons/pointer_main.svg"), auto;
+}
+
+.input[type="file"]::before {
+  content: "";
 }
 
 .input__label_type_file {
   display: block;
-  padding: 14px 16px;
   width: 100%;
   max-height: 48px;
   min-height: 48px;
@@ -178,11 +189,12 @@ input[type="file"] {
   font-size: 16px;
   line-height: 1.5;
   color: #100c34;
-  cursor: pointer;
+  cursor: url("../../icons/pointer_main.svg"), auto;
 }
 
 .input__label_type_file:hover {
   border-color: #666;
+  cursor: url("../../icons/pointer_main.svg"), auto;
 }
 
 .input__label_type_file .input__icon {
@@ -196,19 +208,16 @@ input[type="file"] {
   left: 0;
   position: absolute;
   display: none;
-  cursor: pointer;
+  cursor: url("../../icons/pointer_main.svg"), auto;
 }
 
 .avatar {
   position: relative;
 }
 
-.avatar:hover {
-  opacity: 1;
-}
-
 .avatar:hover .photo__hover {
   display: inline;
+  cursor: url("../../icons/pointer_main.svg"), auto;
 }
 
 .sb-avatar__text {
@@ -230,6 +239,7 @@ input[type="file"] {
 
 .avatar:hover {
   opacity: 1;
+  cursor: url("../../icons/pointer_main.svg"), auto;
 }
 
 .avatar:hover .photo__hover {
@@ -252,6 +262,7 @@ input[type="file"] {
   opacity: 0.5;
 }
 
+
 @media screen and (max-width: 500px) {
   .profile__title {
     font-size: 32px;
@@ -259,11 +270,6 @@ input[type="file"] {
     margin: 85px 0 25px;
   }
 
-  .profile__button {
-    width: 100%;
-    height: 60px;
-    margin: 0 0 158px 0;
-  }
 }
 
 @media screen and (max-width: 780px) {

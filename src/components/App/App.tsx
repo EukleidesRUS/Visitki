@@ -18,7 +18,8 @@ const App: FC = (): JSX.Element => {
     isAuth: false,
     isAdmin: false,
     id: "2cb3baaa7528a9bb5e2c20d9",
-    userData: null
+    userData: null,
+    theme: null
   });
   //Проверяем, записан ли токен в локальном хранилище, если да,
   //то записываем в переменную.
@@ -33,6 +34,7 @@ const App: FC = (): JSX.Element => {
       );
     }
   }, []);
+  
 
   return (
     <AuthContext.Provider value={{ state, setState }}>

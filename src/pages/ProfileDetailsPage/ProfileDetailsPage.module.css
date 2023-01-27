@@ -155,6 +155,10 @@
 
 
 @media screen and (max-width: 1250px) {
+  .profileDetailsContainer {
+    padding: 0 32px 0;
+  }
+  
   .profileDetailsMain {
     column-gap: 20px;
     padding: 8px 0 32px;
@@ -173,15 +177,10 @@
     display: flex;
     flex-wrap: wrap;
     column-gap: 20px;
-    width: 100%;
-    max-width: 1440px;
   }
   .profileDetailsMainInfoImg {
     width: 342px;
     height: 342px;
-    object-fit: cover;
-    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-    filter: grayscale(100%);
   }
   .profileDetailsMainInfo {
     max-width: 295px;
@@ -200,6 +199,7 @@
     margin: 0 0 25px 0;
     line-height: 20px;
   }
+  
   .profileDetailsMainInfoIcons {
     max-width: 80px;
   }
@@ -208,5 +208,60 @@
   }
   .profileDetailsMainInfoStatusIcon {
     visibility: visible;
+    top: 30px;
+    right: -15px;
+  }
+}
+
+@media screen and (max-width: 722px) {
+  .profileDetailsContainer {
+    padding: 0 24px 0;
+    
+  }
+  
+  .profileDetailsMain {
+    column-gap: 32px;
+    padding: 8px 0 32px;
+    grid-template-columns: 272px;
+    grid-template-areas:
+      "name"
+      "photo"
+      "status";
+  }
+
+  .profileDetailsMainInfoName {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 2.3px;
+    max-width: 236px;
+   align-self: flex-start;
+    margin: 0 0 24px;
+  }
+  
+  .profileDetailsMainInfoStatus {
+    width: 272px;
+    padding: 65px 0 0;
+    position: relative;
+  }
+  .profileDetailsOther {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .profileDetailsMainInfoImgContainer {
+    margin-top: 30px;
+  }
+  .profileDetailsMainInfoImg {
+    width: 272px;
+    height: 272px;
+  }
+  .profileDetailsMainInfo {
+    max-width: 272px;
+    max-height: 414px;
+    margin-top: 2px;
+  }
+  .profileDetailsMainInfoStatusIcon {
+    visibility: visible;
+    top: 35px;
+    right: 10px;
   }
 }

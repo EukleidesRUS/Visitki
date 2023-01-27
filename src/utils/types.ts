@@ -12,7 +12,7 @@ export type TProfileDetailsID = {
 };
 
 export type TButton = {
-  click?: () => void;
+  click?: () => void ;
   text: string;
   size: string;
   disabled?: boolean;
@@ -30,6 +30,7 @@ export type TAuth = {
   isAdmin: boolean;
   userData: TProfileID | null;
   id: string;
+  theme?:string | null;
 };
 
 //Работа с API бекенда

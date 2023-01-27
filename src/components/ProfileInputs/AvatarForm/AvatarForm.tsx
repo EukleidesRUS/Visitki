@@ -39,7 +39,7 @@ const AvatarForm = ({
         </label>
         <input
           className={styles.avatar}
-          type="file"
+          type="avatar"
           accept="image/*"
           onChange={handleChange}
           name="file"

@@ -3,12 +3,13 @@ import SelectRegionInput from "../../components/ProfileInputs/SelectRegionInput/
 import styles from "./ProfilePage.module.css";
 import { ReactComponent as Clip } from "../../images/logo/clip.svg";
 import { CalendarInput } from "../../components/ProfileInputs/Calendar/CalendarInput";
-import {TProfileStateForm} from "../../utils/types"
+import { TProfileStateForm } from "../../utils/types";
 import SelectStyleInput from "../../components/ProfileInputs/SelectStyleInput/SelectStyleInput";
 import { AuthContext } from "../../services/AuthContext";
 import { TContext } from "../../utils/types";
 import { profileDefaultState } from "../../utils/profileDefaultState";
 import AvatarForm from "../../components/ProfileInputs/AvatarForm/AvatarForm";
+import Button from "../../components/Button/Button";
 
 const ProfilePage: FC = () => {
   const { state } = useContext<TContext>(AuthContext);
@@ -52,7 +53,9 @@ const ProfilePage: FC = () => {
     }
   }, [state.userData]);
 
-  const handleChange =(event: ChangeEvent<HTMLInputElement | HTMLSelectElement> | TProfileStateForm) => {
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement> | TProfileStateForm
+  ) => {
     event.preventDefault();
   };
 
@@ -125,6 +128,7 @@ const ProfilePage: FC = () => {
             <input
               className={styles.input}
               type="file"
+              accept="image/jpeg,image/png,image/gif"
               onChange={handleChange}
             />
             <Clip className={styles.input__icon} />
@@ -151,6 +155,7 @@ const ProfilePage: FC = () => {
             <input
               className={styles.input}
               type="file"
+              accept="image/jpeg,image/png,image/gif"
               onChange={handleChange}
             />
             <Clip className={styles.input__icon} />
@@ -192,17 +197,11 @@ const ProfilePage: FC = () => {
             maxLength={300}
           ></textarea>
         </div>
-
         <p className={styles.warning}>
           Поля, отмеченные звездочкой, обязательны для&nbsp;заполнения
         </p>
-        <button
-          className={styles.profile__button}
-          type="submit"
-          onClick={handleChange}
-        >
-          Сохранить
-        </button>
+        {/* <button className={styles.profile__button}>Сохранить</button> */}
+        <Button text="Сохранить" size="largeButton" disabled={false} />
       </form>
     </section>
   ) : null;

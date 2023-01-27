@@ -17,7 +17,7 @@ select {
   position: absolute;
   top: 14px;
   right: 18px;
-  cursor: pointer;
+  cursor: url("../../../icons/pointer_main.svg"), auto;
   z-index: 2;
 }
 
@@ -156,4 +156,5 @@ select {
   font-size: 16px;
   line-height: 1.5;
   color: #100c34;
+  cursor: url("../../../icons/pointer_main.svg"), auto;
 }
