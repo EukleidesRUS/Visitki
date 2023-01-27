@@ -128,6 +128,7 @@ const ProfilePage: FC = () => {
             <input
               className={styles.input}
               type="file"
+              name="file"
               accept="image/jpeg,image/png,image/gif"
               onChange={handleChange}
             />
@@ -156,6 +157,7 @@ const ProfilePage: FC = () => {
               className={styles.input}
               type="file"
               accept="image/jpeg,image/png,image/gif"
+              name="file"
               onChange={handleChange}
             />
             <Clip className={styles.input__icon} />

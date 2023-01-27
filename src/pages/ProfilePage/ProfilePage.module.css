@@ -129,7 +129,6 @@ input[type="date"],
 textarea {
   position: relative;
   resize: none;
-
 }
 
 .input__icon {
@@ -149,10 +148,11 @@ input[type="date"] + .input__icon {
 input[type="avatar"] {
   display: none;
 }
-.input[type="file"]::-webkit-file-upload-button {
+
+.input[name="file"]::-webkit-file-upload-button {
   visibility: hidden;
 }
-input[type="file"] {
+input[name="file"] {
   content: 'Файл не выбран';
   display: block;
   outline: none;
@@ -172,7 +172,7 @@ input[type="file"] {
   cursor: url("../../icons/pointer_main.svg"), auto;
 }
 
-.input[type="file"]::before {
+.input[name="file"]::before {
   content: "";
 }
 

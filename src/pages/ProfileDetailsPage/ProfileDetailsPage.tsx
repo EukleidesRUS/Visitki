@@ -79,7 +79,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
       });
     }
   }, [state.theme]);
-
+  
   return (
     <div className={styles.profileDetailsContainer}>
       {!profileData.data ? (
