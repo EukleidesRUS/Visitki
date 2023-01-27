@@ -51,3 +51,15 @@
     top:15px;
     right: 18px;
   }
+
+
+  @media screen and (max-width: 1250px) {
+    .profileDetailsOtherBlock{
+      max-width: 342px;
+      min-height: 366px;
+      margin-bottom: 56px;
+    }
+    .profileDetailsOtherBlockChatIcon{
+      visibility: visible;
+    }
+  }

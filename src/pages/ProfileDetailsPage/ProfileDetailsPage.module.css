@@ -17,8 +17,11 @@
 
 .profileDetailsMain {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 440px)) minmax(200px, 325px);
   column-gap: 70px;
+  grid-template-areas:
+    "name photo status";
   padding: 8px 0 72px;
 }
 
@@ -32,6 +35,7 @@
   max-height: 440px;
 }
 .profileDetailsMainInfoName {
+  grid-area: name;
   color: #100c34;
   font-weight: 500;
   font-size: 60px;
@@ -41,6 +45,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   max-width: 443px;
+  align-self: center;
 }
 .profileDetailsMainInfoTown {
   color: #100c34;
@@ -57,6 +62,7 @@
 }
 
 .profileDetailsMainInfoImgContainer {
+  grid-area: photo;
   position: relative;
   display: flex;
   box-sizing: border-box;
@@ -100,6 +106,7 @@
 }
 
 .profileDetailsMainInfoStatus {
+  grid-area: status;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,7 +115,7 @@
   position: relative;
 }
 
-.profileDetailsMainInfoStatusFeedback{
+.profileDetailsMainInfoStatusFeedback {
   position: absolute;
   display: flex;
   width: 100%;
@@ -144,4 +151,62 @@
   column-gap: 70px;
   width: 100%;
   max-width: 1440px;
+}
+
+
+@media screen and (max-width: 1250px) {
+  .profileDetailsMain {
+    column-gap: 20px;
+    padding: 8px 0 32px;
+    grid-template-columns: repeat(2, minmax(250px, 342px));
+    grid-template-areas:
+      "name photo"
+      ". status";
+  }
+  
+  .profileDetailsMainInfoStatus {
+    width: 325px;
+    padding: 60px 0 0 5px;
+    position: relative;
+  }
+  .profileDetailsOther {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    width: 100%;
+    max-width: 1440px;
+  }
+  .profileDetailsMainInfoImg {
+    width: 342px;
+    height: 342px;
+    object-fit: cover;
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+  }
+  .profileDetailsMainInfo {
+    max-width: 295px;
+    width: 100%;
+    max-height: 258px;
+    margin-top: 85px;
+  }
+  .profileDetailsMainInfoName {
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: 2.3px;
+    max-width: 295px;
+    margin: 0 0 107px;
+  }
+  .profileDetailsMainInfoTown {
+    margin: 0 0 25px 0;
+    line-height: 20px;
+  }
+  .profileDetailsMainInfoIcons {
+    max-width: 80px;
+  }
+  .profileDetailsMainInfoChatIcon {
+    visibility: visible;
+  }
+  .profileDetailsMainInfoStatusIcon {
+    visibility: visible;
+  }
 }
