@@ -114,6 +114,40 @@
   font-weight: 400;
 }
 
+@media screen and (max-width: 830px) {
+  .main {
+    padding: 0 32px 0;
+  }
+  .mainTownFilter {
+    min-width: 342px;
+  }
+  .mainOptions {
+    padding: 4px 0 28px;
+
+  }
+  .cardContainer {
+    column-gap: 20px;
+  }
+}
 
 
+
+@media screen and (max-width: 600px) {
+  .main {
+    padding: 0 24px 0;
+  }
+  .mainOptions {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 9px 0 24px;
+
+  }
+  .mainTownFilter {
+    margin-top: 24px;
+    min-width: 272px;
+  }
+  .mainOptionsMapLink {
+    padding-left: 111px;
+  }
+}
 

@@ -14,8 +14,11 @@ const AccountBox: FC = (): JSX.Element => {
     }
   };
   return (
-    //Тут будет не профиль
     <div className={styles.accountBox}>
+           <ProtectedLink
+          className={styles.protectedLink}
+          to={state.isAdmin ? "/admin" : `/details/:${state.id}`}
+        >
       <div className={styles.accountBoxContainer}>
         {!state.isAdmin ? (
           <img
@@ -32,10 +35,11 @@ const AccountBox: FC = (): JSX.Element => {
             : "Панель администратора"}
         </p>
       </div>
+      </ProtectedLink>
       <div className={styles.accountBoxButtons}>
         <ProtectedLink
           className={styles.protectedLink}
-          to={state.isAdmin ? "/admin" : `/details/:${state.id}`}
+          to={state.isAdmin ? "/admin" : `/profile`}
         >
           {!state.isAdmin && (
             <div className={styles.accountBoxButton}>
@@ -46,7 +50,7 @@ const AccountBox: FC = (): JSX.Element => {
         <ProtectedLink className={styles.protectedLink} to={"admin"}>
           <div className={styles.accountBoxButton} onClick={isAdmin}>
             <p className={styles.accountBoxButtonProfile}>
-              Режим {!state.isAdmin ? "админа" : "пользователя"}
+              {!state.isAdmin ? "Админ" : "Пользовательский"}
             </p>
           </div>
         </ProtectedLink>
