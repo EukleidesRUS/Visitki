@@ -1,48 +1,71 @@
-import { FC, useState } from "react";
-import SelectRegionInput from "../../components/SelectRegionInput/SelectRegionInput";
+import { FC, useEffect, useState, useContext, ChangeEvent } from "react";
+import SelectRegionInput from "../../components/ProfileInputs/SelectRegionInput/SelectRegionInput";
 import styles from "./ProfilePage.module.css";
 import { ReactComponent as Clip } from "../../images/logo/clip.svg";
-import Avatar from "react-avatar";
-import { CalendarInput } from "../../components/Calendar/CalendarInput";
-import photo from "../../images/Ellipse.png";
-import SelectStyleInput from "../../components/SelectStyleInput/SelectStyleInput";
+import { CalendarInput } from "../../components/ProfileInputs/Calendar/CalendarInput";
+import {TProfileStateForm} from "../../utils/types"
+import SelectStyleInput from "../../components/ProfileInputs/SelectStyleInput/SelectStyleInput";
+import { AuthContext } from "../../services/AuthContext";
+import { TContext } from "../../utils/types";
+import { profileDefaultState } from "../../utils/profileDefaultState";
+import AvatarForm from "../../components/ProfileInputs/AvatarForm/AvatarForm";
 
-const ProfilePage: FC = (): JSX.Element => {
-  const [file, setFile] = useState<any>();
-  function handleChange(e: any) {
-    setFile(URL.createObjectURL(e.target.files[0]));
-  }
+const ProfilePage: FC = () => {
+  const { state } = useContext<TContext>(AuthContext);
 
-  return (
-    <div className={styles.main}>
-      <div className={styles.photo__container}>
-        <h4 className={styles.photo__load}>Загрузите фото*</h4>
-        <label className={styles.avatar} htmlFor="file">
-          <Avatar
-            style={{ position: "relative", border: "1px solid black" }}
-            className={styles.cover}
-            src={file == null ? "" : file}
-            color="white"
-            round="100px"
-            size="150px"
-          ></Avatar>
-          <img className={styles.photo__hover} src={photo} alt="avatar" />
-        </label>
-        <input
-          className={styles.avatar}
-          type="file"
-          accept="image/*"
-          onChange={handleChange}
-          name="file"
-          id="file"
-        />
+  //Стейт для отправки данных формы
+  const [form, setFormValue] = useState(profileDefaultState);
+  useEffect(() => {
+    if (state.userData) {
+      const { profile, info } = state.userData;
+      setFormValue({
+        profile: {
+          name: profile.name,
+          photo: profile.photo,
+          city: {
+            name: profile.city.name,
+            geocode: profile.city.geocode,
+          },
+          birthday: profile.birthday,
+          quote: profile.quote,
+          telegram: profile.telegram,
+          github: profile.github,
+          template: state.userData.profile.template,
+        },
+        info: {
+          hobby: {
+            text: info.hobby.text,
+            image: info.hobby.image,
+          },
+          status: {
+            text: info.status.text,
+            image: info.status.image,
+          },
+          job: {
+            text: info.job.text,
+          },
+          edu: {
+            text: info.edu.text,
+          },
+        },
+      });
+    }
+  }, [state.userData]);
 
-        <p className={styles.photo__size}>(размер не менее 440х440)</p>
-      </div>
-      <form className={styles.form} action="">
+  const handleChange =(event: ChangeEvent<HTMLInputElement | HTMLSelectElement> | TProfileStateForm) => {
+    event.preventDefault();
+  };
+
+  return !!state.userData ? (
+    <section className={styles.main}>
+      <AvatarForm state={state} setFormValue={setFormValue} />
+
+      <form className={styles.form} action="" onSubmit={handleChange}>
         <div className={styles.input__container}>
           <p className={styles.input__title}> Дата рождения *</p>
-          <CalendarInput />
+          {state.userData && (
+            <CalendarInput birthday={state.userData.profile.birthday} />
+          )}
         </div>
 
         <div className={styles.input__container}>
@@ -59,6 +82,8 @@ const ProfilePage: FC = (): JSX.Element => {
               className={styles.input}
               placeholder="@example"
               type="text"
+              value={state.userData.profile.telegram}
+              onChange={handleChange}
             />
           </label>
         </div>
@@ -70,6 +95,8 @@ const ProfilePage: FC = (): JSX.Element => {
               className={styles.input}
               placeholder="@example"
               type="text"
+              defaultValue={state.userData.profile.github}
+              onChange={handleChange}
             />
           </label>
         </div>
@@ -82,9 +109,11 @@ const ProfilePage: FC = (): JSX.Element => {
         <div className={styles.input__container}>
           <p className={styles.input__title}> Девиз, цитата</p>
           <textarea
+            onChange={handleChange}
             className={styles.textarea}
             placeholder="Не более 100 символов"
             maxLength={100}
+            value={state.userData.profile.quote}
           ></textarea>
         </div>
 
@@ -93,7 +122,11 @@ const ProfilePage: FC = (): JSX.Element => {
           <label
             className={`${styles.input__label} ${styles.input__label_type_file}`}
           >
-            <input className={styles.input} type="file" />
+            <input
+              className={styles.input}
+              type="file"
+              onChange={handleChange}
+            />
             <Clip className={styles.input__icon} />
           </label>
           <p className={styles.input__caption}>
@@ -103,6 +136,8 @@ const ProfilePage: FC = (): JSX.Element => {
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
+            value={state.userData.info.hobby.text}
+            onChange={handleChange}
           ></textarea>
         </div>
 
@@ -113,16 +148,22 @@ const ProfilePage: FC = (): JSX.Element => {
           <label
             className={`${styles.input__label} ${styles.input__label_type_file}`}
           >
-            <input className={styles.input} type="file" />
+            <input
+              className={styles.input}
+              type="file"
+              onChange={handleChange}
+            />
             <Clip className={styles.input__icon} />
           </label>
           <p className={styles.input__caption}>
             Рекомендуемый размер фото 230х129
           </p>
           <textarea
+            onChange={handleChange}
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
+            defaultValue={state.userData.info.edu.text}
           ></textarea>
         </div>
 
@@ -131,9 +172,11 @@ const ProfilePage: FC = (): JSX.Element => {
             Из какой сферы пришёл? Кем работаешь?
           </p>
           <textarea
+            onChange={handleChange}
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
+            defaultValue={state.userData.info.job.text}
           ></textarea>
         </div>
 
@@ -143,6 +186,7 @@ const ProfilePage: FC = (): JSX.Element => {
           </p>
 
           <textarea
+            onChange={handleChange}
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
@@ -152,10 +196,16 @@ const ProfilePage: FC = (): JSX.Element => {
         <p className={styles.warning}>
           Поля, отмеченные звездочкой, обязательны для&nbsp;заполнения
         </p>
-        <button className={styles.profile__button}>Сохранить</button>
+        <button
+          className={styles.profile__button}
+          type="submit"
+          onClick={handleChange}
+        >
+          Сохранить
+        </button>
       </form>
-    </div>
-  );
+    </section>
+  ) : null;
 };
 
 export default ProfilePage;

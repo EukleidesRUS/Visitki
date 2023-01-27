@@ -1,9 +1,11 @@
 import styles from "./CalendarInput.module.css";
-import { months } from "../../utils/dates";
-import { FC, useState } from "react";
-import calendarIcon from "../../icons/forms-icons/calendar.svg";
+import { months } from "../../../utils/dates";
+import { useState } from "react";
+import calendarIcon from "../../../icons/forms-icons/calendar.svg";
 
-export const CalendarInput:FC = () => {
+export const CalendarInput = ({birthday}: {birthday: string}): JSX.Element => {
+  //Данные о дне рождения с сервера не испольхуются, т.к. оттуда приходят некоректные данные. 
+  //А именно, день недели, месяц, год.
   let todayYear = 0;
   todayYear = new Date().getFullYear();
   let years = [];

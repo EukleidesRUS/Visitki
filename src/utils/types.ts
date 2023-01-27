@@ -204,11 +204,32 @@ export type TFeedbackBlock = {
 };
 
 export type TDefaultReactionsData = {
-  item: string, count: number, id: number
-}
+  item: string;
+  count: number;
+  id: number;
+};
 
 export type TUseFeedBack = (
   profileData: TProfileID,
   setReactions: any,
   target: string
 ) => void;
+
+export type TProfileStateForm = {
+  profile: {
+    name: string;
+    photo: string;
+    city: { name: string; geocode: number[] };
+    birthday: string;
+    quote: string;
+    telegram: string;
+    github: string;
+    template: string;
+  };
+  info: {
+    hobby: TProfileInfoItem;
+    status: TProfileInfoItem;
+    job: TProfileInfoItem;
+    edu: TProfileInfoItem;
+  };
+} | any

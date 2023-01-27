@@ -57,7 +57,7 @@ select {
 }
 
 .years_button {
-  background-image: url(../../icons/openArray.svg);
+  background-image: url(../../../icons/openArray.svg);
   background-repeat: no-repeat;
   background-position: center right 8px;
   font-size: 14px;
@@ -72,7 +72,7 @@ select {
 }
 
 .months_button {
-  background-image: url(../../icons/openArray.svg);
+  background-image: url(../../../icons/openArray.svg);
   background-repeat: no-repeat;
   background-position: center right 8px;
   font-size: 14px;

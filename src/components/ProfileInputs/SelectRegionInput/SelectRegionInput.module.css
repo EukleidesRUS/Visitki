@@ -12,8 +12,8 @@
   font-size: 16px;
   line-height: 1.5;
   color: #100c34;
-  cursor: url("../../icons/pointer_main.svg"), auto;
-  background-image: url(../../images/logo/arrow-down.svg);
+  cursor: url("../../../icons/pointer_main.svg"), auto;
+  background-image: url(../../../images/logo/arrow-down.svg);
   background-size: 24px 24px;
   background-repeat: no-repeat;
   background-position: right;
@@ -30,7 +30,7 @@
 .select_active {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  background-image: url(../../images/logo/arrow-up.svg);
+  background-image: url(../../../images/logo/arrow-up.svg);
 }
 
 .input__icon {
@@ -68,7 +68,7 @@ ymaps[class*="suggest-item"] {
   padding: 6px 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  cursor: url("../../icons/pointer_main.svg"), auto;
+  cursor: url("../../../icons/pointer_main.svg"), auto;
 }
 
 ymaps[class*="suggest-item"]:hover {
@@ -114,7 +114,7 @@ ymaps[class*="i-custom-scroll"]:hover {
   font-size: 16px;
   line-height: 1.5;
   color: #100c34;
-  cursor: url("../../icons/pointer_main.svg"), auto;
+  cursor: url("../../../icons/pointer_main.svg"), auto;
 }
 
 .select__container:first-child {

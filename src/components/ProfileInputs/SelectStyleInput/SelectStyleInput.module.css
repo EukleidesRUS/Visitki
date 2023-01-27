@@ -11,8 +11,8 @@
   font-size: 16px;
   line-height: 1.5;
   color: #100c34;
-  cursor: url("../../icons/pointer_main.svg"), auto;
-  background-image: url(../../images/logo/arrow-down.svg);
+  cursor: url("../../../icons/pointer_main.svg"), auto;
+  background-image: url(../../../images/logo/arrow-down.svg);
   background-size: 24px 24px;
   background-repeat: no-repeat;
   background-position: right;
@@ -26,7 +26,7 @@
 }
 
 .select_active {
-  background-image: url(../../images/logo/arrow-up.svg);
+  background-image: url(../../../images/logo/arrow-up.svg);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }

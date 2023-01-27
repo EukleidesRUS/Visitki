@@ -1,7 +1,24 @@
 .main {
   margin-left: auto;
   margin-right: auto;
-  width: 440px;
+}
+
+.photo__size {
+  margin: 0;
+  padding: 0;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.photo__load {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
 }
 
 .form {
@@ -13,7 +30,6 @@
 }
 
 .photo__container {
-  width: 440px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -110,13 +126,15 @@ textarea:focus {
 
 .textarea::placeholder,
 .input::placeholder {
-  font-family: -apple-system, BlinkMacSystemFont, "IBM Plex Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "IBM Plex Sans", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 }
 
 .input[type="date"] {
-  font-family: -apple-system, BlinkMacSystemFont, "IBM Plex Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "IBM Plex Sans", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 }
 
 .warning {
@@ -172,7 +190,6 @@ input[type="file"] {
   right: 15px;
 }
 
-
 .photo__hover {
   width: 152px;
   height: 152px;
@@ -225,6 +242,14 @@ input[type="file"] {
 
 .cover {
   object-fit: cover;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  position: "relative";
+  border: "1px solid black";
+}
+
+.cover:hover {
+  opacity: 0.5;
 }
 
 @media screen and (max-width: 500px) {
@@ -235,7 +260,7 @@ input[type="file"] {
   }
 
   .profile__button {
-    width: 250px;
+    width: 100%;
     height: 60px;
     margin: 0 0 158px 0;
   }

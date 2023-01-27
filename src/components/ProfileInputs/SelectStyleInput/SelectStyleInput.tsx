@@ -1,6 +1,6 @@
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import styles from "./SelectStyleInput.module.css";
-import { dataForSelectStyles } from "../../utils/constants";
+import { dataForSelectStyles } from "../../../utils/constants";
 
 function SelectStyleInput(): JSX.Element {
   const selectForStyles = useRef<HTMLInputElement>(null);
