@@ -1,13 +1,16 @@
-import { SyntheticEvent, useEffect, useRef, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useRef, useState } from "react";
 import styles from "./SelectStyleInput.module.css";
 import { dataForSelectStyles } from "../../utils/constants";
+import { AuthContext } from "../../services/AuthContext";
 
 function SelectStyleInput(): JSX.Element {
+  const {state, setState} = useContext(AuthContext);
   const selectForStyles = useRef<HTMLInputElement>(null);
   const [selectStyleData, setSelectStyleData] = useState({
     content: "",
     active: false,
   });
+
 
   const setSelectStylesActive = () => {
     setSelectStyleData({
@@ -28,6 +31,12 @@ function SelectStyleInput(): JSX.Element {
     const targetValue = target.innerText;
     setSelectStyleData({ active: false, content: targetValue });
   };
+  useEffect(()=>{
+    if(selectStyleData.content!==''){
+      setState({ ...state, theme:selectStyleData.content})
+    }
+
+  },[selectStyleData])
 
   return (
     <>

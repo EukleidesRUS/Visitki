@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useMemo } from "react";
+import { FC, useState, useEffect, useMemo, useContext } from "react";
 import TelegramIcon from "../../components/Icons/TelegramIcon/TelegramIcon";
 import GitHubIcon from "../../components/Icons/GitHubIcon/GitHubIcon";
 import StatusIcon from "../../components/Icons/StatusIcon/StatusIcon";
@@ -10,8 +10,10 @@ import { getReactionsData, getUserProfile } from "../../utils/api/api";
 import { TProfileDetailsID, TProfileID } from "../../utils/types";
 import { useLocation } from "react-router";
 import FeedbackBlock from "../../components/FeedbackBlock/FeedbackBlock";
+import { AuthContext } from "../../services/AuthContext";
 
 const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
+  const { state } = useContext(AuthContext);
   const location = useLocation();
   const [profileData, setprofileData] = useState<any | null>({
     data: null,
@@ -21,8 +23,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
   //Варианты для тестирования "default", "daring", "romantic".
   const [theme, setTheme] = useState({
     profilePhotoStyle: "default",
-    statusColor: "default",
-    borderDetailsOther: "default",
+    borderAndColor: "default",
   });
 
   const [isOpen, setIsOpen] = useState({
@@ -60,6 +61,23 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
       });
     }
   }, [id]);
+
+  useEffect(() => {
+    if (state.theme==="романтичный") {
+      setTheme({
+        ...theme,
+        profilePhotoStyle: "romantic",
+        borderAndColor: "romantic"
+      });
+    }
+    else if(state.theme==="дерзкий") {
+      setTheme({
+        ...theme,
+        profilePhotoStyle: "daring",
+        borderAndColor: "daring"
+      });
+    }
+  }, [state.theme]);
 
   return (
     <div className={styles.profileDetailsContainer}>
@@ -130,7 +148,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 {/* Цвет в зависимости от темы передаем в stroke:#100C34 или #FF00A8  */}
                 <StatusIcon
                   stroke={
-                    theme.statusColor !== "default" ? "#FF00A8" : "#100C34"
+                    theme.borderAndColor !== "default" ? "#FF00A8" : "#100C34"
                   }
                 />
               </div>
@@ -138,11 +156,11 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
               {/* Цитата с бека не комильфо, поэтому будет так */}
               <h3
                 className={`${styles.profileDetailsMainInfoStatusText} ${
-                  theme.statusColor !== "default" &&
+                  theme.borderAndColor !== "default" &&
                   styles.profileDetailsMainInfoColor
                 }`}
               >
-                Эй, приятель, я думаю, ты ошибся 
+                Эй, приятель, я думаю, ты ошибся
               </h3>
               <div
                 className={styles.profileDetailsMainInfoStatusIcon}
@@ -156,7 +174,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
           <div className={styles.profileDetailsOther}>
             {profileData.data.info.hobby && (
               <ProfileDetailsOtherBlock
-                theme={theme.borderDetailsOther !== "default" ? true : false}
+                theme={theme.borderAndColor !== "default" ? true : false}
                 title="УВЛЕЧЕНИЯ"
                 target="hobby"
                 image={profileData.data.info.hobby.image}
@@ -166,7 +184,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
             )}
             {profileData.data.info.status && (
               <ProfileDetailsOtherBlock
-                theme={theme.borderDetailsOther !== "default" ? true : false}
+                theme={theme.borderAndColor !== "default" ? true : false}
                 title="СЕМЬЯ"
                 target="status"
                 image={profileData.data.info.status.image}
@@ -176,7 +194,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
             )}
             {profileData.data.info.job && (
               <ProfileDetailsOtherBlock
-                theme={theme.borderDetailsOther !== "default" ? true : false}
+                theme={theme.borderAndColor !== "default" ? true : false}
                 title="СФЕРА"
                 target="job"
                 description={profileData.data.info.job.text}
@@ -185,7 +203,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
             )}
             {profileData.data.info.edu && (
               <ProfileDetailsOtherBlock
-                theme={theme.borderDetailsOther !== "default" ? true : false}
+                theme={theme.borderAndColor !== "default" ? true : false}
                 title="УЧЕБА"
                 target="edu"
                 description={profileData.data.info.edu.text}

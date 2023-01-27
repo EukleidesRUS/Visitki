@@ -6,6 +6,7 @@ import Avatar from "react-avatar";
 import { CalendarInput } from "../../components/Calendar/CalendarInput";
 import photo from "../../images/Ellipse.png";
 import SelectStyleInput from "../../components/SelectStyleInput/SelectStyleInput";
+import Button from "../../components/Button/Button";
 
 const ProfilePage: FC = (): JSX.Element => {
   const [file, setFile] = useState<any>();
@@ -152,7 +153,8 @@ const ProfilePage: FC = (): JSX.Element => {
         <p className={styles.warning}>
           Поля, отмеченные звездочкой, обязательны для&nbsp;заполнения
         </p>
-        <button className={styles.profile__button}>Сохранить</button>
+        {/* <button className={styles.profile__button}>Сохранить</button> */}
+        <Button text="Сохранить" size="largeButton" disabled={false} /*click={}*//>
       </form>
     </div>
   );

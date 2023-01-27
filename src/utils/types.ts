@@ -32,6 +32,7 @@ export type TAuth = {
   isAdmin: boolean;
   userData: any | null;
   id: string;
+  theme?:string | null;
 };
 
 //Работа с API бекенда
