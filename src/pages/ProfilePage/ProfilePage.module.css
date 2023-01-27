@@ -98,6 +98,15 @@ textarea:focus {
   color: #100c34;
   resize: none;
 }
+.textarea::-webkit-scrollbar {
+  color: #f2f2f2;
+  width: 7px;
+}
+.textarea::-webkit-scrollbar-thumb {
+  background-color: #b1acaca7;
+  border-radius: 18px;
+
+}
 
 .input__caption {
   margin: 0;
