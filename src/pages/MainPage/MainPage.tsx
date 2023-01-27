@@ -28,8 +28,7 @@ const MainPage: FC = (): JSX.Element => {
   const [cards, setCards] = useState<TCards>({
     users: null,
   });
-  const sortRef: any = useRef(null);
-  const location = useLocation()
+  const sortRef: {current: HTMLDivElement | null}  = useRef(null);
 
   // Открытие/закрытие фильтра
   const filterSet = () => {
@@ -42,10 +41,13 @@ const MainPage: FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const handleCloseOutsideClick = (evt: Event) => {
-      if (!sortRef.current.contains(evt.target)) {
+    const handleCloseOutsideClick = (evt: any) => {
+      if (sortRef.current) {
+        if (!sortRef.current.contains(evt.target)) {
         setIsOpened(false);
+      } 
       }
+      
     };
     document.body.addEventListener("click", handleCloseOutsideClick);
 
@@ -112,7 +114,6 @@ const MainPage: FC = (): JSX.Element => {
               img={cardData.profile.photo}
               name={cardData.profile.name}
               city={cardData.profile.city.name}
-              location={location}
             />
           ))}
         </div>

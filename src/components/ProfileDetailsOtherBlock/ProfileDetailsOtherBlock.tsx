@@ -1,5 +1,4 @@
 import React, { FC, useState } from "react";
-import { useLocation } from "react-router";
 import imgBorderSolid from "../../images/BorderSolid.png";
 import imgBorderZig from "../../images/BorderZig.png";
 import { TProfileID } from "../../utils/types";
@@ -11,7 +10,7 @@ type TProfileDetailsOtherBlock = {
   theme: boolean;
   title: string;
   target: string;
-  image?: any;
+  image?: string;
   description?: string;
   profileData?:TProfileID | null;
 };
@@ -25,7 +24,6 @@ const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
   target
 }): JSX.Element => {
 
-  const location = useLocation();
   const [isImg, setIsImg] = React.useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -65,7 +63,6 @@ const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
         target={target}
         open={isOpen}
         size="forDetails"
-        location={location.pathname}
       />
     </div>
   );

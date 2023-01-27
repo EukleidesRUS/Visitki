@@ -2,19 +2,20 @@ import { FC, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ChatIcon from "../../components/Icons/ChatIcon/ChatIcon";
 import { getReactionsData, getUserProfile } from "../../utils/api/api";
-import { TCardProps, TProfileID } from "../../utils/types";
+import { TCardProfileData, TCardProps, TProfileID } from "../../utils/types";
 import FeedbackBlock from "../FeedbackBlock/FeedbackBlock";
 import styles from "./Card.module.css";
+
+
 
 const Card: FC<TCardProps> = ({
   img,
   name,
   city,
   id,
-  location,
 }): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
-  const [profileData, setprofileData] = useState<any | null>({
+  const [profileData, setprofileData] = useState<TCardProfileData>({
     data: null,
     reactions: null,
   });
@@ -43,7 +44,6 @@ const Card: FC<TCardProps> = ({
           open={isOpen}
           profileData={profileData}
           target="hobby"
-          location={location.pathname}
         />
       </div>
       <Link to={`details/:${id}`}>
@@ -53,7 +53,7 @@ const Card: FC<TCardProps> = ({
 
       <div className={styles.cardIcon} onClick={openFeedback}>
         <ChatIcon
-          count={profileData.reactions ? profileData.reactions.total : `${0}`}
+          count={profileData.reactions ? profileData.reactions.total : 0}
         />
       </div>
     </div>

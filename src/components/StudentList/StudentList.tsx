@@ -3,6 +3,7 @@ import clearIcon from "../../images/clear.png";
 import { useEffect, useState, FC } from "react";
 import { getUsersData, changesUsersData } from "../../utils/api/api";
 import { AddButtonWrapper } from "../AddButtonWrapepr/AddButtonWrapepr";
+import { TUserDataDetail } from "../../utils/types";
 
 export const StudentList: FC = (): JSX.Element => {
   let [studentsArr, setStudentsArr] = useState([]);
@@ -26,7 +27,7 @@ export const StudentList: FC = (): JSX.Element => {
     }
   };
 
-  const updateUserInfo = (email: any, cohort: any, id: any) => {
+  const updateUserInfo = (email: string, cohort: string, id: string) => {
     changesUsersData(email, cohort, id);
   };
 
@@ -36,7 +37,7 @@ export const StudentList: FC = (): JSX.Element => {
   let temp: any = [];
 
   const searchInList = () => {
-    studentsArr.map((el: any) => {
+    studentsArr.map((el: TUserDataDetail) => {
       let fake = [];
       fake.push(el.name, el.email, el.cohort);
       fake.map((w) => {
@@ -82,7 +83,7 @@ export const StudentList: FC = (): JSX.Element => {
             <div className={styles.list_wrapper}>
               <ul className={styles.list}>
                 {!word
-                  ? studentsArr?.map((el: any) => (
+                  ? studentsArr?.map((el: TUserDataDetail) => (
                       <li className={styles.list_item} key={el._id}>
                         <input
                           className={styles.list_item_text}
@@ -105,7 +106,7 @@ export const StudentList: FC = (): JSX.Element => {
                         </p>
                       </li>
                     ))
-                  : result.map((el: any) => (
+                  : result.map((el: TUserDataDetail) => (
                       <li className={styles.list_item} key={el._id}>
                         <input
                           className={styles.list_item_text}

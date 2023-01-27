@@ -12,7 +12,7 @@ export const AddButtonWrapper: FC = ():JSX.Element => {
     });
   };
 
-  const parseFileToJson = (path: any) => {
+  const parseFileToJson = (path: ArrayBuffer) => {
     const res = xlsx.readFile(path);
     const sheetNames = res.SheetNames;
     const fistSheetName = sheetNames[0];
@@ -21,7 +21,8 @@ export const AddButtonWrapper: FC = ():JSX.Element => {
     return json;
   };
 
-  const uploadStudents = async (evt: any) => {
+  const uploadStudents= async (evt: any) => {
+    evt.preventDefault();
     const [file] = evt.target.files;
     let buffer = await file.arrayBuffer();
     let json = parseFileToJson(buffer);
