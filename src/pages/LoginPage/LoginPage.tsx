@@ -10,6 +10,7 @@ const LoginPage: FC = (): JSX.Element => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state, setState } = useContext<TContext>(AuthContext);
+  
   const tokenLocal = localStorage.getItem("token") || null;
 
   function logIn(tokenFromHash: string): void {

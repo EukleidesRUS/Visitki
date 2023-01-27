@@ -7,18 +7,19 @@ import ProfileDetailsOtherBlock from "../../components/ProfileDetailsOtherBlock/
 import styles from "./ProfileDetailsPage.module.css";
 import Preloader from "../../components/Preloader/Preloader";
 import { getReactionsData, getUserProfile } from "../../utils/api/api";
-import { TProfileDetailsID, TProfileID } from "../../utils/types";
+import { TCardProfileData, TProfileDetailsID, TProfileID } from "../../utils/types";
 import { useLocation } from "react-router";
 import FeedbackBlock from "../../components/FeedbackBlock/FeedbackBlock";
 import { AuthContext } from "../../services/AuthContext";
 
-const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
-  const { state } = useContext(AuthContext);
+const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
+  const {state} = useContext(AuthContext)
   const location = useLocation();
-  const [profileData, setprofileData] = useState<any | null>({
+  const [profileData, setprofileData] = useState<TCardProfileData>({
     data: null,
     reactions: null,
   });
+  
   //С сервера не приходят данные о теме.
   //Варианты для тестирования "default", "daring", "romantic".
   const [theme, setTheme] = useState({
@@ -114,7 +115,6 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                 profileData={profileData}
                 target="photo"
                 size="forDetails"
-                location={location.pathname}
               />
               <img
                 className={`${styles.profileDetailsMainInfoImg} 
@@ -141,7 +141,6 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                   profileData={profileData}
                   target="quote"
                   size="forCards"
-                  location={location.pathname}
                 />
               </div>
               <div className={styles.profileDetailsMainInfoStatusIconContainer}>

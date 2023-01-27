@@ -3,6 +3,7 @@ import deleteIcon from "../../images/delete.png";
 import { deleteComment, getCommentsData } from "../../utils/api/api";
 import { useState, useEffect, FC } from "react";
 import clearIcon from "../../images/clear.png";
+import { TComment } from "../../utils/types";
 
 export const CommentList:FC = (): JSX.Element => {
   let [commentsArr, setCommentsArr] = useState([]);
@@ -36,12 +37,12 @@ export const CommentList:FC = (): JSX.Element => {
     handleChange((word = ""));
   };
 
-  const removeComment = (id: any) => {
+  const removeComment = (id: string) => {
     deleteComment(id);
   };
 
   const searchInList = () => {
-    commentsArr.map((el: any) => {
+    commentsArr.map((el: TComment) => {
       let fake = [];
       fake.push(el.from.name);
       fake.map((w) => {
@@ -93,7 +94,7 @@ export const CommentList:FC = (): JSX.Element => {
           <div className={styles.list_wrapper}>
             <ul className={styles.list}>
               {!word &&
-                commentsArr?.map((el: any) => (
+                commentsArr?.map((el: TComment) => (
                   <li className={styles.list_item} key={el._id}>
                     <p className={styles.list_item_text}>{/*el.cohort*/}</p>
                     <p className={styles.list_item_text}>{/*el.date*/}</p>
@@ -113,7 +114,7 @@ export const CommentList:FC = (): JSX.Element => {
                   </li>
                 ))}
               {word &&
-                result.map((el: any) => (
+                result.map((el: TComment) => (
                   <li className={styles.list_item} key={el._id}>
                     <p className={styles.list_item_text}>{el.cohort}</p>
                     <p className={styles.list_item_text}>{el.date}</p>

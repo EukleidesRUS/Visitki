@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import styles from "./ChatIcon.module.css";
 
 interface IChatIcon {
-  count?: number;
+  count: number;
 }
 
 const ChatIcon: FC<IChatIcon> = ({ count }): JSX.Element => {

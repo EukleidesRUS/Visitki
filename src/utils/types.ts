@@ -3,13 +3,13 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 export type TFcVoid = () => void;
 
 export type TLoaderProps = {
-  width: string,
-  height: string,
-}
+  width: string;
+  height: string;
+};
 
 export type TProfileDetailsID = {
-  id?: string
-}
+  id?: string;
+};
 
 export type TButton = {
   click?: () => void;
@@ -18,19 +18,17 @@ export type TButton = {
   disabled?: boolean;
 };
 
-
 export type TCardProps = {
-  img: string,
-  id: string,
-  name: string,
-  city: string
-  location: any
-}
+  img: string;
+  id: string;
+  name: string;
+  city: string;
+};
 
 export type TAuth = {
   isAuth: boolean;
   isAdmin: boolean;
-  userData: any | null;
+  userData: TProfileID | null;
   id: string;
   theme?:string | null;
 };
@@ -68,10 +66,10 @@ export type TProfile = {
 };
 
 export type TProfileInfoItem = {
-  text: string,
-  image?: string,
-  reactions: number,
-}
+  text: string;
+  image?: string;
+  reactions: number;
+};
 
 //Информация о личной жизни студента
 export type TProfileInfo = {
@@ -90,7 +88,7 @@ export type TProfileID = {
   updatedAt: number;
   profile: TProfile;
   info: TProfileInfo;
-  reactions: number;
+  reactions: TReactionsRequest;
 };
 
 //Реакции конкретного пользователя
@@ -98,9 +96,13 @@ export type TProfileReactions = {
   text: string;
   _id: string;
   from: {
-    value: string;
+    cohort: string;
+    email: string;
+    name: string;
+    _id: string;
   };
   target: string;
+  emotion?: string;
 };
 
 //Получение реакций пользователей для конкретного пользователя
@@ -114,16 +116,18 @@ export type TComment = {
   text: string;
   _id: string;
   from: {
-    email: string,
-    name: string,
-    _id: string
+    email: string;
+    name: string;
+    _id: string;
   };
   target: string;
   to: {
     _id: string;
-    name: string,
-    email: string
+    name: string;
+    email: string;
   };
+  cohort?: string;
+  date?: string;
 };
 
 //Получение всех комментариев пользователей
@@ -132,13 +136,12 @@ export type TCommentsRequest = {
   items: TComment[];
 };
 
-export type TContext = {
+export type TContext =
+  | {
       state: TAuth;
       setState?: Dispatch<SetStateAction<TAuth>> | TFcVoid;
     }
   | any;
-
-export type TProfileDataRequest = {};
 
 export type TFile = {
   email: string;
@@ -160,6 +163,13 @@ export type TCards = {
   users: TProfileID[] | null;
 };
 
+export type TCardProfileData =
+  | {
+      data: TProfileID | null;
+      reactions: TCardProfileReactions | null;
+    }
+  | any;
+
 export type TDefaultProfileData = {
   email: string;
   cohort: string;
@@ -180,3 +190,26 @@ export type TDefaultProfilesData = {
   total: number;
   items: TDefaultProfileData[];
 };
+
+export type TCardProfileReactions = {
+  total: number;
+  items: TProfileReactions[];
+};
+
+export type TFeedbackBlock = {
+  open: boolean;
+  //Дописать тип для реакций
+  profileData: TCardProfileData;
+  target: string;
+  size?: string;
+};
+
+export type TDefaultReactionsData = {
+  item: string, count: number, id: number
+}
+
+export type TUseFeedBack = (
+  profileData: TProfileID,
+  setReactions: any,
+  target: string
+) => void;
