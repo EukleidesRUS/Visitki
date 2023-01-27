@@ -57,9 +57,22 @@
     .profileDetailsOtherBlock{
       max-width: 342px;
       min-height: 366px;
-      margin-bottom: 56px;
+      margin-bottom: 32px;
     }
     .profileDetailsOtherBlockChatIcon{
       visibility: visible;
+    }
+  }
+
+  @media screen and (max-width: 722px) {
+    .profileDetailsOtherBlock{
+      max-width: 272px;
+      min-height: 414px;
+      margin-bottom: 12px;
+    }
+    .profileDetailsOtherBlockChatIcon{
+      visibility: visible;
+      top:13px;
+      right: 10px;
     }
   }

@@ -142,8 +142,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): any => {
                   styles.profileDetailsMainInfoColor
                 }`}
               >
-                Эй, приятель, я думаю, ты ошибся дверью, клуб любителей кожаных
-                вещей двумя этажами ниже.
+                Эй, приятель, я думаю, ты ошибся 
               </h3>
               <div
                 className={styles.profileDetailsMainInfoStatusIcon}
