@@ -1,8 +1,12 @@
-import { SyntheticEvent, useEffect, useRef, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useRef, useState } from "react";
 import styles from "./SelectStyleInput.module.css";
 import { dataForSelectStyles } from "../../../utils/constants";
+import { TContext } from "../../../utils/types";
+import { AuthContext } from "../../../services/AuthContext";
 
 function SelectStyleInput(): JSX.Element {
+  const {state, setState } = useContext<TContext>(AuthContext);
+
   const selectForStyles = useRef<HTMLInputElement>(null);
   const [selectStyleData, setSelectStyleData] = useState({
     content: "",
@@ -28,6 +32,11 @@ function SelectStyleInput(): JSX.Element {
     const targetValue = target.innerText;
     setSelectStyleData({ active: false, content: targetValue });
   };
+  useEffect(()=>{
+    if(selectStyleData.content !== ""){
+      setState({ ...state, theme:selectStyleData.content})
+    }
+  },[selectStyleData.content])
 
   return (
     <>
