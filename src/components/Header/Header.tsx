@@ -9,10 +9,10 @@ const Header: FC = (): JSX.Element => {
   const { state } = useContext<TContext>(AuthContext);
   
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <Logo />
       {state.isAuth && <AccountBox />}
-    </div>
+    </header>
   );
 };
 
