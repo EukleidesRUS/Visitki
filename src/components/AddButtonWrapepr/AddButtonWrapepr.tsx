@@ -39,7 +39,7 @@ export const AddButtonWrapper: FC = ():JSX.Element => {
       </p>
       <label className={styles.button}>
         Выберите файл
-        <input className={styles.input} type="file" onChange={uploadStudents} />
+        <input className={styles.input} type="students" onChange={uploadStudents} />
       </label>
     </div>
   );

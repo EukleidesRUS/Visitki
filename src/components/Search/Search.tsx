@@ -1,3 +1,4 @@
+import { Button } from "@pbe/react-yandex-maps";
 import { FC, useState } from "react";
 import { CommentList } from "../CommentList/CommentList";
 import { StudentList } from "../StudentList/StudentList";

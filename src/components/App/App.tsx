@@ -12,6 +12,7 @@ import { AdminPage } from "../../pages/AdminPage/AdminPage";
 import MapPage from "../../pages/MapPage/MapPage";
 import ProfileDetailsPage from "../../pages/ProfileDetailsPage/ProfileDetailsPage";
 import { getUserProfile } from "../../utils/api/api";
+import { CohortPage } from "../../pages/ChogortPage/ChogortPahe";
 
 const App: FC = (): JSX.Element => {
   const [state, setState] = useState<TAuth>({
@@ -19,7 +20,7 @@ const App: FC = (): JSX.Element => {
     isAdmin: false,
     id: "2cb3baaa7528a9bb5e2c20d9",
     userData: null,
-    theme: null
+    theme: null,
   });
   //Проверяем, записан ли токен в локальном хранилище, если да,
   //то записываем в переменную.
@@ -34,7 +35,6 @@ const App: FC = (): JSX.Element => {
       );
     }
   }, []);
-  
 
   return (
     <AuthContext.Provider value={{ state, setState }}>
@@ -42,6 +42,7 @@ const App: FC = (): JSX.Element => {
         <Route path="/" element={<Layout />}>
           <Route element={<ProtectedRoute />}>
             <Route index element={<MainPage />} />
+            <Route path="cohort/:name" element={<CohortPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="details/:id" element={<ProfileDetailsPage />} />
             <Route path="admin" element={<AdminPage />} />

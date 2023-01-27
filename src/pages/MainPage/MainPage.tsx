@@ -1,4 +1,4 @@
-import { FC, useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import arrowIcon from "../../icons/arrow_home.svg";
 import styles from "./MainPage.module.css";
 import ProtectedLink from "../../HOC/ProtectedLink";
@@ -6,7 +6,8 @@ import Card from "../../components/Card/Card";
 import { getDefaultProfiles } from "../../utils/api/api";
 import { TCards, TProfileID } from "../../utils/types";
 import Preloader from "../../components/Preloader/Preloader";
-import { useLocation } from "react-router";
+import { AuthContext } from "../../services/AuthContext";
+import { useNavigate } from "react-router";
 
 const data = [
   { city: "Все города" },
@@ -20,7 +21,9 @@ const data = [
   { city: "Темирчеркасск" },
 ];
 
-const MainPage: FC = (): JSX.Element => {
+const MainPage = ({cohort}: {cohort?: string}): JSX.Element => {
+  const navigate = useNavigate();
+  const {state} = useContext(AuthContext)
   const [isOpened, setIsOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState({
     selected: "Все города",
@@ -29,7 +32,6 @@ const MainPage: FC = (): JSX.Element => {
     users: null,
   });
   const sortRef: {current: HTMLDivElement | null}  = useRef(null);
-
   // Открытие/закрытие фильтра
   const filterSet = () => {
     setIsOpened(!isOpened);
@@ -64,6 +66,8 @@ const MainPage: FC = (): JSX.Element => {
       })
     );
   }, []);
+
+   
   
   return (
     <div className={styles.main}>
