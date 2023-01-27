@@ -17,7 +17,7 @@ export const checkResponse = (res: Response) => {
 
 //Обертка для запроса
 function request(url: string, options: RequestInit) {
-  return fetch(url, options).then(checkResponse);
+  return fetch(url, options).then(checkResponse).catch((err) => console.log(err.message));;
 }
 //Запрос пользователей. По умолчанию возвращает профили из той же когорты, что и пользователь, который сделал запрос, или ничего.
 export const getDefaultProfiles = async () => {
