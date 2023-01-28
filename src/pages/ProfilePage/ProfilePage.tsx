@@ -14,55 +14,99 @@ import Button from "../../components/Button/Button";
 const ProfilePage: FC = () => {
   const { state } = useContext<TContext>(AuthContext);
 
+  // //Стейт для отправки данных формы
+  // const [form, setForm] = useState({
+  //   telegram: "",
+  //   github: "",
+  //   status: "",
+  //   hobby: "",
+  //   edu: "",
+  //   job: "",
+  //   family:"",
+  // });
+
   //Стейт для отправки данных формы
-  const [form, setForm] = useState({
-    telegram: "",
-    github: "",
-    status: "",
-    hobby: "",
-    edu: "",
-    job: "",
-    family:"",
-  });
+  const [form, setForm] = useState(profileDefaultState);
+
+  // useEffect(() => {
+  //   if (state.userData) {
+  //     setForm({
+  //       ...form,
+  //       telegram: state.userData.profile.telegram,
+  //       github: state.userData.profile.github,
+  //       status: state.userData.profile.quote,
+  //       hobby: state.userData.info.hobby.text,
+  //       edu: state.userData.info.edu.text,
+  //       job: state.userData.info.job.text,
+  //       family:state.userData.info.status.text
+  //     });
+  //   }
+  // }, [state.userData])
+console.log(state.userData);
 
   useEffect(() => {
     if (state.userData) {
       setForm({
-        ...form,
-        telegram: state.userData.profile.telegram,
-        github: state.userData.profile.github,
-        status: state.userData.profile.quote,
-        hobby: state.userData.info.hobby.text,
-        edu: state.userData.info.edu.text,
-        job: state.userData.info.job.text,
-        family:state.userData.info.status.text
+        profile: {
+          name: state.userData.profile.name,
+          photo: state.userData.profile.photo,
+          city: {
+            name: state.userData.profile.city.name,
+            geocode: state.userData.profile.city.geocode,
+          },
+          birthday: state.userData.profile.birthday,
+          quote: state.userData.profile.quote,
+          telegram: state.userData.profile.telegram,
+          github: state.userData.profile.github,
+          template: state.userData.profile.template,
+        },
+        info: {
+          hobby: {
+            text: state.userData.info.hobby.text,
+            image: state.userData.info.hobby.image,
+          },
+          status: {
+            text: state.userData.info.status.text,
+            image: state.userData.info.status.image,
+          },
+          job: {
+            text: state.userData.info.job.text,
+            image: state.userData.info.job.image,
+          },
+          edu: {
+            text: state.userData.info.edu.text,
+            image: state.userData.info.edu.image,
+          },
+        },
       });
     }
   }, [state.userData]);
 
   const handleChangeInput = (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement> | TProfileStateForm
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement> | TProfileStateForm | any
   ) => {
     event.preventDefault();
     if (event.target.name === "telegram") {
-      setForm({ ...form, telegram: event.target.value });
+      setForm({ ...form, profile: {...form.profile, telegram: event.target.value} });
     } else if (event.target.name === "github") {
-      setForm({ ...form, github: event.target.value });
+      setForm({ ...form, profile: {...form.profile, github: event.target.value} });
     } else if (event.target.name === "status") {
-      setForm({ ...form, status: event.target.value });
+      setForm({ ...form, info: {...form.info, status: {...form.info.status, text: event.target.value}} });
     } else if (event.target.name === "hobby") {
-      setForm({ ...form, hobby: event.target.value });
+      setForm({ ...form, info: {...form.info, hobby: {...form.info.hobby, text: event.target.value}} });
     } else if (event.target.name === "edu") {
-      setForm({ ...form, edu: event.target.value });
-    }else if (event.target.name === "job") {
-      setForm({ ...form, job: event.target.value });
+      setForm({ ...form, info: {...form.info, edu: {...form.info.edu, text: event.target.value}} });
+    } else if (event.target.name === "job") {
+      setForm({ ...form, info: {...form.info, job: {...form.info.job, text: event.target.value}} });
+    } else if (event.target.name === "quote") {
+      setForm({ ...form, profile: {...form.profile, quote: event.target.value} });
     }
-    
   };
+console.log(form);
 
   return !!state.userData ? (
     <section className={styles.main}>
-      <AvatarForm state={state}/>
+      <AvatarForm state={state} />
 
       <form className={styles.form} action="" onSubmit={handleChangeInput}>
         <div className={styles.input__container}>
@@ -85,7 +129,7 @@ const ProfilePage: FC = () => {
             <input
               className={styles.input}
               type="text"
-              value={form.telegram}
+              value={form.profile.telegram}
               onChange={handleChangeInput}
               name="telegram"
             />
@@ -98,7 +142,7 @@ const ProfilePage: FC = () => {
             <input
               className={styles.input}
               type="text"
-              value={form.github}
+              value={form.profile.github}
               onChange={handleChangeInput}
               name="github"
             />
@@ -117,8 +161,8 @@ const ProfilePage: FC = () => {
             className={styles.textarea}
             placeholder="Не более 100 символов"
             maxLength={100}
-            value={form.status}
-            name="status"
+            value={form.profile.quote}
+            name="quote"
           ></textarea>
         </div>
 
@@ -143,7 +187,7 @@ const ProfilePage: FC = () => {
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
-            value={form.hobby}
+            value={form.info.hobby.text}
             onChange={handleChangeInput}
             name="hobby"
           ></textarea>
@@ -173,7 +217,7 @@ const ProfilePage: FC = () => {
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
-            defaultValue={form.family}
+            value={form.info.status.text}
             name="status"
           ></textarea>
         </div>
@@ -187,7 +231,7 @@ const ProfilePage: FC = () => {
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
-            defaultValue={form.job}
+            value={form.info.job.text}
             name="job"
           ></textarea>
         </div>
@@ -202,7 +246,7 @@ const ProfilePage: FC = () => {
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
-            defaultValue={form.edu}
+            value={form.info.edu.text}
             name="edu"
           ></textarea>
         </div>
@@ -214,5 +258,6 @@ const ProfilePage: FC = () => {
     </section>
   ) : null;
 };
+
 
 export default ProfilePage;

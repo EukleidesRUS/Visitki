@@ -68,7 +68,7 @@ export type TProfile = {
 export type TProfileInfoItem = {
   text: string;
   image?: string;
-  reactions: number;
+  reactions?: number;
 };
 
 //Информация о личной жизни студента
@@ -198,7 +198,6 @@ export type TCardProfileReactions = {
 
 export type TFeedbackBlock = {
   open: boolean;
-  //Дописать тип для реакций
   profileData: TCardProfileData;
   target: string;
   size?: string;
@@ -233,4 +232,4 @@ export type TProfileStateForm = {
     job: TProfileInfoItem;
     edu: TProfileInfoItem;
   };
-} | any
+} 

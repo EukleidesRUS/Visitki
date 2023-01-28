@@ -1,10 +1,10 @@
-export let profileDefaultState = {
+export const profileDefaultState = {
     profile: {
       name: "",
       photo: "",
       city: {
         name: "",
-        geocode: [] as number[],
+        geocode: [],
       },
       birthday: "",
       quote: "",
@@ -15,17 +15,19 @@ export let profileDefaultState = {
     info: {
       hobby: {
         text: "",
-        image: "" as string | null,
+        image: "",
       },
       status: {
         text: "",
-        image: "" as string | null,
+        image: "",
       },
       job: {
         text: "",
+        image: ""
       },
       edu: {
         text: "",
+        image: "",
       },
     },
   }
