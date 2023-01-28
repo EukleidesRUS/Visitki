@@ -56,7 +56,7 @@
 
 .input {
   width: 100%;
-  max-height: 48px;
+  min-height: 48px;
   border: 1px solid #100c34;
   border-radius: 4px;
   box-sizing: border-box;
@@ -66,7 +66,10 @@
   color: #100c34;
   cursor: url("../../icons/pointer_main.svg"), auto;
   outline: none;
+  padding: 0 16px 0;
 }
+
+
 
 input:hover,
 textarea:hover {
@@ -103,7 +106,7 @@ textarea:focus {
   width: 7px;
 }
 .textarea::-webkit-scrollbar-thumb {
-  background-color: #cac4c4;
+  background-color: #e8e2e2;
   border-radius: 18px;
 
 }
@@ -154,7 +157,7 @@ input[type="date"] + .input__icon {
   right: 15px;
 }
 
-input[type="avatar"] {
+input[type="file"] {
   display: none;
 }
 

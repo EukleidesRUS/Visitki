@@ -5,11 +5,9 @@ import { TAuth, TProfileStateForm } from "../../../utils/types";
 import photo from "../../../images/Ellipse.png";
 
 const AvatarForm = ({
-  state,
-  setFormValue
+  state
 }: {
   state: TAuth;
-  setFormValue: Dispatch<SetStateAction<TProfileStateForm>>;
 }) => {
   const [file, setFile] = useState<any>();
 
@@ -39,10 +37,10 @@ const AvatarForm = ({
         </label>
         <input
           className={styles.avatar}
-          type="avatar"
+          type="file"
           accept="image/*"
           onChange={handleChange}
-          name="file"
+          name="avatar"
           id="file"
         />
       </form>
