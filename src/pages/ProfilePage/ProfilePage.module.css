@@ -103,7 +103,7 @@ textarea:focus {
   width: 7px;
 }
 .textarea::-webkit-scrollbar-thumb {
-  background-color: #b1acaca7;
+  background-color: #cac4c4;
   border-radius: 18px;
 
 }

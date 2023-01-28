@@ -16,6 +16,15 @@ const ProfilePage: FC = () => {
 
   //Стейт для отправки данных формы
   const [form, setFormValue] = useState(profileDefaultState);
+  const [input, setInput] = useState({
+    telegram: "",
+    github: "",
+    status: "",
+    hobby: "",
+    edu: "",
+    job: "",
+    family:"",
+  });
   useEffect(() => {
     if (state.userData) {
       const { profile, info } = state.userData;
@@ -53,17 +62,46 @@ const ProfilePage: FC = () => {
     }
   }, [state.userData]);
 
-  const handleChange = (
+  useEffect(() => {
+    if (state.userData) {
+      setInput({
+        ...input,
+        telegram: state.userData.profile.telegram,
+        github: state.userData.profile.github,
+        status: state.userData.profile.quote,
+        hobby: state.userData.info.hobby.text,
+        edu: state.userData.info.edu.text,
+        job: state.userData.info.job.text,
+        family:state.userData.info.status.text
+      });
+    }
+  }, [state.userData]);
+
+  const handleChangeInput = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement> | TProfileStateForm
   ) => {
     event.preventDefault();
+    if (event.target.name === "telegram") {
+      setInput({ ...input, telegram: event.target.value });
+    } else if (event.target.name === "github") {
+      setInput({ ...input, github: event.target.value });
+    } else if (event.target.name === "status") {
+      setInput({ ...input, status: event.target.value });
+    } else if (event.target.name === "hobby") {
+      setInput({ ...input, hobby: event.target.value });
+    } else if (event.target.name === "edu") {
+      setInput({ ...input, edu: event.target.value });
+    }else if (event.target.name === "job") {
+      setInput({ ...input, job: event.target.value });
+    }
+    
   };
 
   return !!state.userData ? (
     <section className={styles.main}>
       <AvatarForm state={state} setFormValue={setFormValue} />
 
-      <form className={styles.form} action="" onSubmit={handleChange}>
+      <form className={styles.form} action="" onSubmit={handleChangeInput}>
         <div className={styles.input__container}>
           <p className={styles.input__title}> Дата рождения *</p>
           {state.userData && (
@@ -85,8 +123,9 @@ const ProfilePage: FC = () => {
               className={styles.input}
               placeholder="@example"
               type="text"
-              value={state.userData.profile.telegram}
-              onChange={handleChange}
+              value={input.telegram}
+              onChange={handleChangeInput}
+              name="telegram"
             />
           </label>
         </div>
@@ -98,8 +137,9 @@ const ProfilePage: FC = () => {
               className={styles.input}
               placeholder="@example"
               type="text"
-              defaultValue={state.userData.profile.github}
-              onChange={handleChange}
+              value={input.github}
+              onChange={handleChangeInput}
+              name="github"
             />
           </label>
         </div>
@@ -112,11 +152,12 @@ const ProfilePage: FC = () => {
         <div className={styles.input__container}>
           <p className={styles.input__title}> Девиз, цитата</p>
           <textarea
-            onChange={handleChange}
+            onChange={handleChangeInput}
             className={styles.textarea}
             placeholder="Не более 100 символов"
             maxLength={100}
-            value={state.userData.profile.quote}
+            value={input.status}
+            name="status"
           ></textarea>
         </div>
 
@@ -130,7 +171,7 @@ const ProfilePage: FC = () => {
               type="file"
               name="file"
               accept="image/jpeg,image/png,image/gif"
-              onChange={handleChange}
+              onChange={handleChangeInput}
             />
             <Clip className={styles.input__icon} />
           </label>
@@ -141,8 +182,9 @@ const ProfilePage: FC = () => {
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
-            value={state.userData.info.hobby.text}
-            onChange={handleChange}
+            value={input.hobby}
+            onChange={handleChangeInput}
+            name="hobby"
           ></textarea>
         </div>
 
@@ -158,7 +200,7 @@ const ProfilePage: FC = () => {
               type="file"
               accept="image/jpeg,image/png,image/gif"
               name="file"
-              onChange={handleChange}
+              onChange={handleChangeInput}
             />
             <Clip className={styles.input__icon} />
           </label>
@@ -166,11 +208,12 @@ const ProfilePage: FC = () => {
             Рекомендуемый размер фото 230х129
           </p>
           <textarea
-            onChange={handleChange}
+            onChange={handleChangeInput}
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
-            defaultValue={state.userData.info.edu.text}
+            defaultValue={input.family}
+            name="status"
           ></textarea>
         </div>
 
@@ -179,11 +222,12 @@ const ProfilePage: FC = () => {
             Из какой сферы пришёл? Кем работаешь?
           </p>
           <textarea
-            onChange={handleChange}
+            onChange={handleChangeInput}
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
-            defaultValue={state.userData.info.job.text}
+            defaultValue={input.job}
+            name="job"
           ></textarea>
         </div>
 
@@ -193,16 +237,17 @@ const ProfilePage: FC = () => {
           </p>
 
           <textarea
-            onChange={handleChange}
+            onChange={handleChangeInput}
             className={styles.textarea}
             placeholder="Не более 300 символов"
             maxLength={300}
+            defaultValue={input.edu}
+            name="edu"
           ></textarea>
         </div>
         <p className={styles.warning}>
           Поля, отмеченные звездочкой, обязательны для&nbsp;заполнения
         </p>
-        {/* <button className={styles.profile__button}>Сохранить</button> */}
         <Button text="Сохранить" size="largeButton" disabled={false} />
       </form>
     </section>

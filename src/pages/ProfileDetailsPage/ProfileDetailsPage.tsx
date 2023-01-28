@@ -151,15 +151,13 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
                   }
                 />
               </div>
-
-              {/* Цитата с бека не комильфо, поэтому будет так */}
               <h3
                 className={`${styles.profileDetailsMainInfoStatusText} ${
                   theme.borderAndColor !== "default" &&
                   styles.profileDetailsMainInfoColor
                 }`}
               >
-                Эй, приятель, я думаю, ты ошибся
+                {state.userData.profile.quote}
               </h3>
               <div
                 className={styles.profileDetailsMainInfoStatusIcon}
