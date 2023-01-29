@@ -233,3 +233,14 @@ export type TProfileStateForm = {
     edu: TProfileInfoItem;
   };
 } 
+
+
+export type TProfileDetailsOtherBlock = {
+  theme: boolean;
+  title: string;
+  target: string;
+  image?: string;
+  description?: string;
+  profileData?:TProfileID | null;
+  count: number
+};

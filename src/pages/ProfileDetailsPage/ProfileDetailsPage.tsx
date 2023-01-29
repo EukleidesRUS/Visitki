@@ -19,6 +19,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
     data: null,
     reactions: null,
   });
+  console.log(profileData);
   
   //С сервера не приходят данные о теме.
   //Варианты для тестирования "default", "daring", "romantic".
@@ -79,6 +80,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
       });
     }
   }, [state.theme]);
+  console.log(state);
   
   return (
     <div className={styles.profileDetailsContainer}>
@@ -163,7 +165,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
                 className={styles.profileDetailsMainInfoStatusIcon}
                 onClick={() => openFeedback("status")}
               >
-                <ChatIcon count={1} />
+                <ChatIcon count={profileData.data.info.status.reactions} />
               </div>
             </div>
           </div>
@@ -177,6 +179,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
                 image={profileData.data.info.hobby.image}
                 description={profileData.data.info.hobby.text}
                 profileData={profileData}
+                count={profileData.data.info.hobby.reactions}
               />
             )}
             {profileData.data.info.status && (
@@ -187,6 +190,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
                 image={profileData.data.info.status.image}
                 description={profileData.data.info.status.text}
                 profileData={profileData}
+                count={profileData.data.info.status.reactions}
               />
             )}
             {profileData.data.info.job && (
@@ -196,6 +200,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
                 target="job"
                 description={profileData.data.info.job.text}
                 profileData={profileData}
+                count={profileData.data.info.job.reactions}
               />
             )}
             {profileData.data.info.edu && (
@@ -205,6 +210,7 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
                 target="edu"
                 description={profileData.data.info.edu.text}
                 profileData={profileData}
+                count={profileData.data.info.edu.reactions}
               />
             )}
           </div>

@@ -1,19 +1,10 @@
 import React, { FC, useState } from "react";
 import imgBorderSolid from "../../images/BorderSolid.png";
 import imgBorderZig from "../../images/BorderZig.png";
-import { TProfileID } from "../../utils/types";
+import { TProfileDetailsOtherBlock, TProfileID } from "../../utils/types";
 import FeedbackBlock from "../FeedbackBlock/FeedbackBlock";
 import ChatIcon from "../Icons/ChatIcon/ChatIcon";
 import styles from "./ProfileDetailsOtherBlock.module.css";
-
-type TProfileDetailsOtherBlock = {
-  theme: boolean;
-  title: string;
-  target: string;
-  image?: string;
-  description?: string;
-  profileData?:TProfileID | null;
-};
 
 const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
   theme,
@@ -21,7 +12,8 @@ const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
   image,
   description,
   profileData,
-  target
+  target,
+  count
 }): JSX.Element => {
 
   const [isImg, setIsImg] = React.useState(false);
@@ -56,7 +48,7 @@ const ProfileDetailsOtherBlock: FC<TProfileDetailsOtherBlock> = ({
         {description}
       </p>
       <div className={styles.profileDetailsOtherBlockChatIcon} onClick={openFeedback}>
-        <ChatIcon count={1} />
+        <ChatIcon count={count} />
       </div>
       <FeedbackBlock
         profileData={profileData}
