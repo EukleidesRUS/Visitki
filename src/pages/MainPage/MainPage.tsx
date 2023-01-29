@@ -4,25 +4,13 @@ import styles from "./MainPage.module.css";
 import ProtectedLink from "../../HOC/ProtectedLink";
 import Card from "../../components/Card/Card";
 import { getDefaultProfiles } from "../../utils/api/api";
-import { TCards, TProfileID } from "../../utils/types";
+import { TCards, TProfileID, TProfileStateForm } from "../../utils/types";
 import Preloader from "../../components/Preloader/Preloader";
 import { AuthContext } from "../../services/AuthContext";
-import { useNavigate } from "react-router";
 
-const data = [
-  { city: "Все города" },
-  { city: "Венеция" },
-  { city: "Новочеркасск" },
-  { city: "Старочеркасск" },
-  { city: "Среднечеркасск" },
-  { city: "Ростовочеркасск" },
-  { city: "Москвочеркасск" },
-  { city: "Екатеринбургочеркасск" },
-  { city: "Темирчеркасск" },
-];
+const citiesArray = [{ city: "Все города" }];
 
-const MainPage = ({cohort}: {cohort?: string}): JSX.Element => {
-  const navigate = useNavigate();
+const MainPage = ({ cohort }: { cohort?: string }): JSX.Element => {
   const {state} = useContext(AuthContext)
   const [isOpened, setIsOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState({
@@ -31,7 +19,7 @@ const MainPage = ({cohort}: {cohort?: string}): JSX.Element => {
   const [cards, setCards] = useState<TCards>({
     users: null,
   });
-  const sortRef: {current: HTMLDivElement | null}  = useRef(null);
+  const sortRef: { current: HTMLDivElement | null } = useRef(null);
   // Открытие/закрытие фильтра
   const filterSet = () => {
     setIsOpened(!isOpened);
@@ -41,22 +29,25 @@ const MainPage = ({cohort}: {cohort?: string}): JSX.Element => {
   const selectItem = (city: string) => {
     setSelectedItem({ ...selectItem, selected: city });
   };
+  //Добавление городов пользователей в список
+  let users = cards.users;
 
-  useEffect(() => {
-    const handleCloseOutsideClick = (evt: any) => {
-      if (sortRef.current) {
-        if (!sortRef.current.contains(evt.target)) {
-        setIsOpened(false);
-      } 
+  const createCitiesArray = (users: any) => {
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+      if(citiesArray.find((city) => city !== user.profile.city.name)){
+      citiesArray.push({ city: user.profile.city.name });
       }
-      
-    };
-    document.body.addEventListener("click", handleCloseOutsideClick);
+    }
+  };
 
-    return () => {
-      document.body.removeEventListener("click", handleCloseOutsideClick);
-    };
-  }, []);
+  function searchFilter(users: any) {
+    if (selectedItem.selected === "Все города") {
+      return users;
+    } else {
+      return users.filter((user: TProfileID) => user.profile.city.name.includes(selectedItem.selected));
+    }
+  }
 
   useEffect(() => {
     getDefaultProfiles().then((res) =>
@@ -67,8 +58,27 @@ const MainPage = ({cohort}: {cohort?: string}): JSX.Element => {
     );
   }, []);
 
-   
-  
+  useEffect(() => {
+    const handleCloseOutsideClick = (evt: any) => {
+      if (sortRef.current) {
+        if (!sortRef.current.contains(evt.target)) {
+          setIsOpened(false);
+        }
+      }
+    };
+    document.body.addEventListener("click", handleCloseOutsideClick);
+
+    return () => {
+      document.body.removeEventListener("click", handleCloseOutsideClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (users) {
+      createCitiesArray(users);
+    }
+  }, [state]);
+
   return (
     <div className={styles.main}>
       <div className={styles.mainOptions}>
@@ -89,7 +99,7 @@ const MainPage = ({cohort}: {cohort?: string}): JSX.Element => {
           </div>
           {isOpened && (
             <ul className={styles.mainTownFilterMenu}>
-              {data.map((item, index) => {
+              {citiesArray.map((item, index) => {
                 return (
                   <li
                     className={styles.mainTownFilterMenuItem}
@@ -111,7 +121,7 @@ const MainPage = ({cohort}: {cohort?: string}): JSX.Element => {
         <Preloader />
       ) : (
         <div className={styles.cardContainer}>
-          {cards.users.map((cardData: TProfileID) => (
+          {searchFilter(users)?.map((cardData: TProfileID) => (
             <Card
               key={cardData._id}
               id={cardData._id}
