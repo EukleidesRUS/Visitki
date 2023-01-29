@@ -18,7 +18,7 @@ const LoginPage: FC = (): JSX.Element => {
     //Данные администратор или нет, а так же id пользователя хардкодим.
     getUserProfile(state.id).then((res: TProfileID) =>
       setState({ ...state, isAuth: true, isAdmin: false, userData: res })
-    );
+    ).catch((err) => console.log(`При отправке запроса данных пользователя произошла ${err}`));
     localStorage.setItem("token", tokenFromHash);
     navigate("/");
   }

@@ -63,7 +63,7 @@ const MainPage = ({ cohort }: { cohort?: string }): JSX.Element => {
         ...cards,
         users: res.items,
       });
-    });
+    }).catch((err) => console.log(`При отправке запроса деволтных данных студентов произошла ${err}`));
   }, [cards]);
 
   useEffect(() => {

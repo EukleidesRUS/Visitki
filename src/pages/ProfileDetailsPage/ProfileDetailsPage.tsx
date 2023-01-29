@@ -55,15 +55,27 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
   //Отрисовка данных профиля студента
   useEffect(() => {
     if (id) {
-      getUserProfile(id).then((resData: TProfileID) => {
-        getReactionsData(id).then((resReactions) => {
-          setprofileData({
-            ...profileData,
-            data: resData,
-            reactions: resReactions,
-          });
-        });
-      });
+      getUserProfile(id)
+        .then((resData: TProfileID) => {
+          getReactionsData(id)
+            .then((resReactions) => {
+              setprofileData({
+                ...profileData,
+                data: resData,
+                reactions: resReactions,
+              });
+            })
+            .catch((err) =>
+              console.log(
+                `При отправке запроса реакций пользователя произошла ${err}`
+              )
+            );
+        })
+        .catch((err) =>
+          console.log(
+            `При отправке запроса данных пользователя произошла ${err}`
+          )
+        );
     }
   }, [id]);
 

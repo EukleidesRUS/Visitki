@@ -12,12 +12,17 @@ const api = {
 
 //Проверка статуса запроса
 export const checkResponse = (res: Response) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(
+    `ошибка: ${res.status} - ${res.statusText}`
+  );
 };
 
 //Обертка для запроса
 function request(url: string, options: RequestInit) {
-  return fetch(url, options).then(checkResponse).catch((err) => console.log(err.message));;
+  return fetch(url, options).then(checkResponse);
 }
 //Запрос пользователей. По умолчанию возвращает профили из той же когорты, что и пользователь, который сделал запрос, или ничего.
 export const getDefaultProfiles = async () => {
@@ -28,7 +33,7 @@ export const getDefaultProfiles = async () => {
 };
 
 //Запрос профиля конкретного пользователя.
-export const getUserProfile = async (id: string ) => {
+export const getUserProfile = async (id: string) => {
   return await request(`/profiles/${id}`, {
     method: "GET",
     headers: api.headers,
@@ -68,7 +73,6 @@ export const postReactionsData = async (
     body: JSON.stringify({ reaction }),
   });
 };
-
 
 //Запрос всех пользователей администратором
 export const getUsersData = async () => {

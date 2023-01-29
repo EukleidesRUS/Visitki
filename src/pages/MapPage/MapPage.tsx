@@ -34,7 +34,7 @@ const MapPage:FC = (): JSX.Element => {
         isDataRequest: true,
         usersData: res.items,
       })
-    );
+    ).catch((err) => console.log(`При отправке запроса деволтных данных студентов произошла ${err}`));
   }, [dataRequest.isDataRequest]);
 
   return (

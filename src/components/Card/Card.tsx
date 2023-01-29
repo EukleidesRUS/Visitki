@@ -29,8 +29,8 @@ const Card: FC<TCardProps> = ({
       getUserProfile(id).then((resData: TProfileID) => {
         getReactionsData(id).then((resReactions) => {
           setprofileData({ ...profileData, data: resData, reactions: resReactions });
-        });
-      });
+        }).catch((err) => console.log(`При отправке запроса реакций пользователя произошла ${err}`));
+      }).catch((err) => console.log(`При отправке запроса данных пользователя произошла ${err}`));
     }
   }, []);
 

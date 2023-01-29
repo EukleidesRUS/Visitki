@@ -17,7 +17,7 @@ export const StudentList: FC = (): JSX.Element => {
         temp.push(el);
       });
       setStudentsArr((studentsArr = temp));
-    });
+    }).catch((err) => console.log(`При отправке запроса данных студентов произошла ${err}`));
   }, []);
 
   const setUserInput = (evt: any) => {

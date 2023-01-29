@@ -15,7 +15,7 @@ export const CommentList: FC = (): JSX.Element => {
         temp.push(el);
       });
       setCommentsArr(temp);
-    });
+    }).catch((err) => console.log(`При отправке запроса комментариев студентов произошла ${err}`));
   };
 
   useEffect(() => {
