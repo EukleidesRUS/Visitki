@@ -1,4 +1,4 @@
-import { TFile } from "../../utils/types";
+import { TFile, TNewStudentCard } from "../../utils/types";
 import { postUsersData } from "../../utils/api/api";
 import styles from "./AddButtonWrapepr.module.css";
 import { FC } from "react";
@@ -6,8 +6,8 @@ import { FC } from "react";
 export const AddButtonWrapper: FC = ():JSX.Element => {
   let xlsx = require("xlsx");
 
-  const sendStudents = (json: any) => {
-    json.map((el: any) => {
+  const sendStudents = (json: TNewStudentCard[]) => {
+    json.map((el: TNewStudentCard) => {
       postUsersData(el.email, el.cohort);
     });
   };

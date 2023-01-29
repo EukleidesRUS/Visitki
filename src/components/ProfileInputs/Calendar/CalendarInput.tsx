@@ -1,7 +1,8 @@
 import styles from "./CalendarInput.module.css";
 import { months } from "../../../utils/dates";
-import { useState } from "react";
+import { useState, MouseEventHandler, ChangeEventHandler, SyntheticEvent } from "react";
 import calendarIcon from "../../../icons/forms-icons/calendar.svg";
+import { SyntheticExpression } from "typescript";
 
 export const CalendarInput = ({birthday}: {birthday: string}): JSX.Element => {
   //Данные о дне рождения с сервера не испольхуются, т.к. оттуда приходят некоректные данные. 
@@ -24,17 +25,19 @@ export const CalendarInput = ({birthday}: {birthday: string}): JSX.Element => {
     setShow((isShow) => !isShow);
   };
 
-  const setNewYear = (evt: any) => {
-    setYear((year = evt.target.value));
+  const setNewYear: ChangeEventHandler<HTMLSelectElement> = (evt) => {
+    setYear(((year) = evt.target.value as unknown as number));
   };
 
-  const setNewMonth = (evt: any) => {
+  const setNewMonth: ChangeEventHandler<HTMLSelectElement> = (evt) => {
     setMonth((month = evt.target.value));
     prepareDays();
   };
 
   const setNewDay = (evt: any) => {
-    setDay((date = evt.target.value));
+    console.log(evt);
+    
+    setDay((date = evt.target.value as unknown as number));
   };
 
   const prepareDays = () => {

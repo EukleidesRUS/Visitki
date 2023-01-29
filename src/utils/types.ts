@@ -93,7 +93,7 @@ export type TProfileID = {
 
 //Реакции конкретного пользователя
 export type TProfileReactions = {
-  text: string;
+  text?: string;
   _id: string;
   from: {
     cohort: string;
@@ -101,7 +101,7 @@ export type TProfileReactions = {
     name: string;
     _id: string;
   };
-  target: string;
+  target: string | null;
   emotion?: string;
 };
 
@@ -119,6 +119,7 @@ export type TComment = {
     email: string;
     name: string;
     _id: string;
+    cohort: string;
   };
   target: string;
   to: {
@@ -211,7 +212,7 @@ export type TDefaultReactionsData = {
 
 export type TUseFeedBack = (
   profileData: TProfileID,
-  setReactions: any,
+  setReactions: SetStateAction<TReactionsState>,
   target: string
 ) => void;
 
@@ -243,4 +244,29 @@ export type TProfileDetailsOtherBlock = {
   description?: string;
   profileData?:TProfileID | null;
   count: number
+};
+
+export type TNewStudentCard = {
+  cohort: string;
+  email: string;
+};
+
+export type TCohortPage = {
+  name?: string;
+}
+
+export type TEmotion = {
+  id: number;
+  item: string;
+  count: number;
+};
+
+export type TReactionsState = {
+  commentsData: Array<TProfileReactions> | null;
+  emotionsData: TEmotion[] | null;
+} | null;
+
+export type TReactionsObj = {
+  commentsArr: Array<TProfileReactions>;
+  emotionsArr: TEmotion[];
 };

@@ -52,7 +52,7 @@ const MapPage:FC = (): JSX.Element => {
               defaultState={mapDefaultState}
               modules={["control.ZoomControl", "control.FullscreenControl"]}
             >
-              {dataRequest.usersData.map((student: any) => {
+              {dataRequest.usersData.map((student) => {
                 return (
                   <Placemark
                     geometry={student.profile.city.geocode}

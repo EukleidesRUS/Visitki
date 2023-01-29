@@ -1,7 +1,7 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 import Avatar from "react-avatar";
 import styles from "../../../pages/ProfilePage/ProfilePage.module.css";
-import { TAuth, TProfileStateForm } from "../../../utils/types";
+import { TAuth } from "../../../utils/types";
 import photo from "../../../images/Ellipse.png";
 
 const AvatarForm = ({

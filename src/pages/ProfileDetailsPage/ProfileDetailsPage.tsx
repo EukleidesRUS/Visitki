@@ -7,19 +7,23 @@ import ProfileDetailsOtherBlock from "../../components/ProfileDetailsOtherBlock/
 import styles from "./ProfileDetailsPage.module.css";
 import Preloader from "../../components/Preloader/Preloader";
 import { getReactionsData, getUserProfile } from "../../utils/api/api";
-import { TCardProfileData, TProfileDetailsID, TProfileID } from "../../utils/types";
+import {
+  TCardProfileData,
+  TProfileDetailsID,
+  TProfileID,
+} from "../../utils/types";
 import { useLocation } from "react-router";
 import FeedbackBlock from "../../components/FeedbackBlock/FeedbackBlock";
 import { AuthContext } from "../../services/AuthContext";
 
 const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
-  const {state} = useContext(AuthContext)
+  const { state } = useContext(AuthContext);
   const location = useLocation();
   const [profileData, setprofileData] = useState<TCardProfileData>({
     data: null,
     reactions: null,
   });
-  
+
   //С сервера не приходят данные о теме.
   //Варианты для тестирования "default", "daring", "romantic".
   const [theme, setTheme] = useState({
@@ -64,25 +68,28 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
   }, [id]);
 
   useEffect(() => {
-    if (state.theme==="романтичный") {
+    if (state.theme === "романтичный") {
       setTheme({
         ...theme,
         profilePhotoStyle: "romantic",
-        borderAndColor: "romantic"
+        borderAndColor: "romantic",
       });
-    }
-    else if(state.theme==="дерзкий") {
+    } else if (state.theme === "дерзкий") {
       setTheme({
         ...theme,
         profilePhotoStyle: "daring",
-        borderAndColor: "daring"
+        borderAndColor: "daring",
       });
     }
   }, [state.theme]);
-  
+
   return (
     <div className={styles.profileDetailsContainer}>
-      {!profileData.data ? (
+      {/* на данный момент, в рамках возможностей бекенда, реализовали возможность 
+     переключения профиля темы пользователей в данной форме. 
+     После реализации, со стороны бекенда, возможности изменять данные пользователя
+     необходимо убрать условие  !state.profileData*/}
+      {!profileData.data && !state.profileData ? (
         <Preloader />
       ) : (
         <>
@@ -157,6 +164,8 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
                   styles.profileDetailsMainInfoColor
                 }`}
               >
+                {/* В дополнение к комментарию на строке 85, здесь необходимо будет
+                подставлять данные конкретного пользователя */}
                 {state.userData.profile.quote}
               </h3>
               <div

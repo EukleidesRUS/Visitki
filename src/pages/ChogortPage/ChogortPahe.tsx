@@ -1,20 +1,19 @@
-import React, { FC, useContext, useEffect } from "react";
-
-import { useNavigate, useParams } from "react-router-dom";
+import { FC, useContext, useEffect } from "react";
+import { useLocation } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../services/AuthContext";
+import { TCohortPage } from "../../utils/types";
 import MainPage from "../MainPage/MainPage";
 
-interface ICohortPage {
-  cohort?: string;
-}
-
-export const CohortPage: FC<ICohortPage> = () => {
+export const CohortPage: FC<TCohortPage> = ():JSX.Element => {
   const { state} = useContext(AuthContext)
+  const location = useLocation();
   const navigate = useNavigate();
-  const { cohort } = useParams<string>();
+  const { name } = useParams<string>();
+  
   useEffect(() => {
-    state.isAdmin ? navigate(`cohort:/${cohort}`, {replace: true}) : navigate("/", {replace: true})
+    state.isAdmin ? <Navigate to="/login" state={{ from: location }} replace /> : navigate("/", {replace: true})
   }, [state.isAdmin]);
 
-  return <MainPage cohort={cohort} />;
+  return <MainPage cohort={name} />;
 };

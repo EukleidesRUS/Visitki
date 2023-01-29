@@ -24,34 +24,9 @@ import Button from "../../components/Button/Button";
 const ProfilePage: FC = () => {
   const { state } = useContext<TContext>(AuthContext);
 
-  // //Стейт для отправки данных формы
-  // const [form, setForm] = useState({
-  //   telegram: "",
-  //   github: "",
-  //   status: "",
-  //   hobby: "",
-  //   edu: "",
-  //   job: "",
-  //   family:"",
-  // });
-
   //Стейт для отправки данных формы
   const [form, setForm] = useState(profileDefaultState);
 
-  // useEffect(() => {
-  //   if (state.userData) {
-  //     setForm({
-  //       ...form,
-  //       telegram: state.userData.profile.telegram,
-  //       github: state.userData.profile.github,
-  //       status: state.userData.profile.quote,
-  //       hobby: state.userData.info.hobby.text,
-  //       edu: state.userData.info.edu.text,
-  //       job: state.userData.info.job.text,
-  //       family:state.userData.info.status.text
-  //     });
-  //   }
-  // }, [state.userData])
 
   useEffect(() => {
     if (state.userData) {

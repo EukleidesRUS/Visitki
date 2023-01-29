@@ -4,17 +4,17 @@ import { deleteComment, getCommentsData } from "../../utils/api/api";
 import { useState, useEffect, FC } from "react";
 import clearIcon from "../../images/clear.png";
 import { TComment } from "../../utils/types";
+import { Link } from "react-router-dom";
 
-export const CommentList:FC = (): JSX.Element => {
-  let [commentsArr, setCommentsArr] = useState([]);
+export const CommentList: FC = (): JSX.Element => {
+  const [commentsArr, setCommentsArr] = useState<TComment[]>([]);
 
   const updateCommentList = () => {
     getCommentsData().then((res) => {
-      let temp: any = [];
-      res.items.map((el: any) => {
+      res.items.map((el: TComment) => {
         temp.push(el);
       });
-      setCommentsArr((commentsArr = temp));
+      setCommentsArr(temp);
     });
   };
 
@@ -22,19 +22,19 @@ export const CommentList:FC = (): JSX.Element => {
     updateCommentList();
   }, []);
 
-  let temp: any = [];
-  let [result, setResult] = useState([]);
-  let [word, handleChange] = useState("");
+  let temp: TComment[] = [];
+  const [result, setResult] = useState<TComment[]>([]);
+  const [word, setWord] = useState<string>("");
 
-  const userInput = (evt: any) => {
-    handleChange((word = evt.target.value));
+  const userInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setWord(evt.target.value);
     if (word !== "") {
       searchInList();
     }
   };
 
   const clearSearch = () => {
-    handleChange((word = ""));
+    setWord("");
   };
 
   const removeComment = (id: string) => {
@@ -42,7 +42,7 @@ export const CommentList:FC = (): JSX.Element => {
   };
 
   const searchInList = () => {
-    commentsArr.map((el: TComment) => {
+    commentsArr.map((el) => {
       let fake = [];
       fake.push(el.from.name);
       fake.map((w) => {
@@ -53,7 +53,7 @@ export const CommentList:FC = (): JSX.Element => {
         }
       });
     });
-    setResult((result = temp));
+    setResult(temp);
   };
 
   return (
@@ -94,9 +94,12 @@ export const CommentList:FC = (): JSX.Element => {
           <div className={styles.list_wrapper}>
             <ul className={styles.list}>
               {!word &&
-                commentsArr?.map((el: TComment) => (
+                commentsArr?.map((el) => (
                   <li className={styles.list_item} key={el._id}>
-                    <p className={styles.list_item_text}>{/*el.cohort*/}</p>
+                    <Link to={`/cohort/:${el.from.cohort}`}>
+                      <p className={styles.list_item_text}>{el.from.cohort}</p>
+                    </Link>
+                    {/* Дата не приходит с сервера */}
                     <p className={styles.list_item_text}>{/*el.date*/}</p>
                     <p className={styles.list_item_text}>{el.from.name}</p>
                     <p className={styles.list_item_text}>{el.to.name}</p>
@@ -114,7 +117,7 @@ export const CommentList:FC = (): JSX.Element => {
                   </li>
                 ))}
               {word &&
-                result.map((el: TComment) => (
+                result.map((el) => (
                   <li className={styles.list_item} key={el._id}>
                     <p className={styles.list_item_text}>{el.cohort}</p>
                     <p className={styles.list_item_text}>{el.date}</p>
