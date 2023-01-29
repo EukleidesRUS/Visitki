@@ -89,7 +89,7 @@ export type TProfileID = {
   profile: TProfile;
   info: TProfileInfo;
   reactions: TReactionsRequest;
-};
+} 
 
 //Реакции конкретного пользователя
 export type TProfileReactions = {
@@ -140,9 +140,8 @@ export type TCommentsRequest = {
 export type TContext =
   | {
       state: TAuth;
-      setState?: Dispatch<SetStateAction<TAuth>> | TFcVoid;
-    }
-  | any;
+      setState: Dispatch<SetStateAction<TAuth>>;
+    };
 
 export type TFile = {
   email: string;
@@ -153,6 +152,7 @@ export type TProtectedLink = {
   className: string;
   to: string;
   children: ReactNode;
+  cardId? : string
 };
 
 export type TStateDataMapPage = {
@@ -169,7 +169,7 @@ export type TCardProfileData =
       data: TProfileID | null;
       reactions: TCardProfileReactions | null;
     }
-  | any;
+  ;
 
 export type TDefaultProfileData = {
   email: string;
@@ -178,8 +178,10 @@ export type TDefaultProfileData = {
   createdAt: number;
   updatedAt: number;
   profile: {
+    birthday: string,
     name: string;
     photo: string;
+    quote: string;
     city: {
       name: string;
       geocode: number[];
@@ -242,8 +244,8 @@ export type TProfileDetailsOtherBlock = {
   target: string;
   image?: string;
   description?: string;
-  profileData?:TProfileID | null;
-  count: number
+  profileData: TCardProfileData;
+  count: number | undefined
 };
 
 export type TNewStudentCard = {

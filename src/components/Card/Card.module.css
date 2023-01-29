@@ -17,6 +17,10 @@
   display: flex;
 }
 
+.protectedLink {
+  display: flex
+}
+
 .cardImgContainer {
   display: flex;
   justify-content: center;

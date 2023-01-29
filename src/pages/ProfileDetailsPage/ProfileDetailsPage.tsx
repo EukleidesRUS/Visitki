@@ -101,139 +101,143 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
      переключения профиля темы пользователей в данной форме. 
      После реализации, со стороны бекенда, возможности изменять данные пользователя
      необходимо убрать условие  !state.profileData*/}
-      {!profileData.data && !state.profileData ? (
+      {!profileData.data && !state.userData ? (
         <Preloader />
       ) : (
-        <>
-          <div className={styles.profileDetailsMain}>
-            <div className={styles.profileDetailsMainInfo}>
-              <h1 className={styles.profileDetailsMainInfoName}>
-                {profileData.data.profile.name}
-              </h1>
-              <p className={styles.profileDetailsMainInfoTown}>
-                {profileData.data.profile.city.name}
-              </p>
-              <div className={styles.profileDetailsMainInfoIcons}>
-                <a
-                  className={styles.link}
-                  href={`https://t.me/s/${profileData.data.profile.telegram}`}
-                >
-                  <TelegramIcon />
-                </a>
-                <a
-                  className={styles.link}
-                  href={`https://github.com/${profileData.data.profile.github}`}
-                >
-                  <GitHubIcon />
-                </a>
+        profileData.data && state.userData && (
+          <>
+            <div className={styles.profileDetailsMain}>
+              <div className={styles.profileDetailsMainInfo}>
+                <h1 className={styles.profileDetailsMainInfoName}>
+                  {profileData.data.profile.name}
+                </h1>
+                <p className={styles.profileDetailsMainInfoTown}>
+                  {profileData.data.profile.city.name}
+                </p>
+                <div className={styles.profileDetailsMainInfoIcons}>
+                  <a
+                    className={styles.link}
+                    href={`https://t.me/s/${profileData.data.profile.telegram}`}
+                  >
+                    <TelegramIcon />
+                  </a>
+                  <a
+                    className={styles.link}
+                    href={`https://github.com/${profileData.data.profile.github}`}
+                  >
+                    <GitHubIcon />
+                  </a>
+                </div>
               </div>
-            </div>
-            <div className={styles.profileDetailsMainInfoImgContainer}>
-              <FeedbackBlock
-                open={isOpen.photo}
-                profileData={profileData}
-                target="photo"
-                size="forDetails"
-              />
-              <img
-                className={`${styles.profileDetailsMainInfoImg} 
+              <div className={styles.profileDetailsMainInfoImgContainer}>
+                <FeedbackBlock
+                  open={isOpen.photo}
+                  profileData={profileData}
+                  target="photo"
+                  size="forDetails"
+                />
+                <img
+                  className={`${styles.profileDetailsMainInfoImg} 
               ${
                 (theme.profilePhotoStyle === "romantic" &&
                   styles.profileDetailsMainInfoImgRomantic) ||
                 (theme.profilePhotoStyle === "daring" &&
                   styles.profileDetailsMainInfoImgDaring)
               }`}
-                src={profileData.data.profile.photo}
-                alt="ProfilePhoto"
-              />
-              <div
-                className={styles.profileDetailsMainInfoChatIcon}
-                onClick={() => openFeedback("photo")}
-              >
-                <ChatIcon count={2} />
-              </div>
-            </div>
-            <div className={styles.profileDetailsMainInfoStatus}>
-              <div className={styles.profileDetailsMainInfoStatusFeedback}>
-                <FeedbackBlock
-                  open={isOpen.status}
-                  profileData={profileData}
-                  target="quote"
-                  size="forCards"
+                  src={profileData.data.profile.photo}
+                  alt="ProfilePhoto"
                 />
+                <div
+                  className={styles.profileDetailsMainInfoChatIcon}
+                  onClick={() => openFeedback("photo")}
+                >
+                  <ChatIcon count={2} />
+                </div>
               </div>
-              <div className={styles.profileDetailsMainInfoStatusIconContainer}>
-                {/* Цвет в зависимости от темы передаем в stroke:#100C34 или #FF00A8  */}
-                <StatusIcon
-                  stroke={
-                    theme.borderAndColor !== "default" ? "#FF00A8" : "#100C34"
-                  }
-                />
-              </div>
-              <h3
-                className={`${styles.profileDetailsMainInfoStatusText} ${
-                  theme.borderAndColor !== "default" &&
-                  styles.profileDetailsMainInfoColor
-                }`}
-              >
-                {/* В дополнение к комментарию на строке 85, здесь необходимо будет
+              <div className={styles.profileDetailsMainInfoStatus}>
+                <div className={styles.profileDetailsMainInfoStatusFeedback}>
+                  <FeedbackBlock
+                    open={isOpen.status}
+                    profileData={profileData}
+                    target="quote"
+                    size="forCards"
+                  />
+                </div>
+                <div
+                  className={styles.profileDetailsMainInfoStatusIconContainer}
+                >
+                  {/* Цвет в зависимости от темы передаем в stroke:#100C34 или #FF00A8  */}
+                  <StatusIcon
+                    stroke={
+                      theme.borderAndColor !== "default" ? "#FF00A8" : "#100C34"
+                    }
+                  />
+                </div>
+                <h3
+                  className={`${styles.profileDetailsMainInfoStatusText} ${
+                    theme.borderAndColor !== "default" &&
+                    styles.profileDetailsMainInfoColor
+                  }`}
+                >
+                  {/* В дополнение к комментарию на строке 85, здесь необходимо будет
                 подставлять данные конкретного пользователя */}
-                {state.userData.profile.quote}
-              </h3>
-              <div
-                className={styles.profileDetailsMainInfoStatusIcon}
-                onClick={() => openFeedback("status")}
-              >
-                <ChatIcon count={profileData.data.info.status.reactions} />
+                  {state.userData.profile.quote}
+                </h3>
+                <div
+                  className={styles.profileDetailsMainInfoStatusIcon}
+                  onClick={() => openFeedback("status")}
+                >
+                  <ChatIcon count={profileData.data.info.status.reactions} />
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className={styles.profileDetailsOther}>
-            {profileData.data.info.hobby && (
-              <ProfileDetailsOtherBlock
-                theme={theme.borderAndColor !== "default" ? true : false}
-                title="УВЛЕЧЕНИЯ"
-                target="hobby"
-                image={profileData.data.info.hobby.image}
-                description={profileData.data.info.hobby.text}
-                profileData={profileData}
-                count={profileData.data.info.hobby.reactions}
-              />
-            )}
-            {profileData.data.info.status && (
-              <ProfileDetailsOtherBlock
-                theme={theme.borderAndColor !== "default" ? true : false}
-                title="СЕМЬЯ"
-                target="status"
-                image={profileData.data.info.status.image}
-                description={profileData.data.info.status.text}
-                profileData={profileData}
-                count={profileData.data.info.status.reactions}
-              />
-            )}
-            {profileData.data.info.job && (
-              <ProfileDetailsOtherBlock
-                theme={theme.borderAndColor !== "default" ? true : false}
-                title="СФЕРА"
-                target="job"
-                description={profileData.data.info.job.text}
-                profileData={profileData}
-                count={profileData.data.info.job.reactions}
-              />
-            )}
-            {profileData.data.info.edu && (
-              <ProfileDetailsOtherBlock
-                theme={theme.borderAndColor !== "default" ? true : false}
-                title="УЧЕБА"
-                target="edu"
-                description={profileData.data.info.edu.text}
-                profileData={profileData}
-                count={profileData.data.info.edu.reactions}
-              />
-            )}
-          </div>
-        </>
+            <div className={styles.profileDetailsOther}>
+              {profileData.data.info.hobby && (
+                <ProfileDetailsOtherBlock
+                  theme={theme.borderAndColor !== "default" ? true : false}
+                  title="УВЛЕЧЕНИЯ"
+                  target="hobby"
+                  image={profileData.data.info.hobby.image}
+                  description={profileData.data.info.hobby.text}
+                  profileData={profileData}
+                  count={profileData.data.info.hobby.reactions}
+                />
+              )}
+              {profileData.data.info.status && (
+                <ProfileDetailsOtherBlock
+                  theme={theme.borderAndColor !== "default" ? true : false}
+                  title="СЕМЬЯ"
+                  target="status"
+                  image={profileData.data.info.status.image}
+                  description={profileData.data.info.status.text}
+                  profileData={profileData}
+                  count={profileData.data.info.status.reactions}
+                />
+              )}
+              {profileData.data.info.job && (
+                <ProfileDetailsOtherBlock
+                  theme={theme.borderAndColor !== "default" ? true : false}
+                  title="СФЕРА"
+                  target="job"
+                  description={profileData.data.info.job.text}
+                  profileData={profileData}
+                  count={profileData.data.info.job.reactions}
+                />
+              )}
+              {profileData.data.info.edu && (
+                <ProfileDetailsOtherBlock
+                  theme={theme.borderAndColor !== "default" ? true : false}
+                  title="УЧЕБА"
+                  target="edu"
+                  description={profileData.data.info.edu.text}
+                  profileData={profileData}
+                  count={profileData.data.info.edu.reactions}
+                />
+              )}
+            </div>
+          </>
+        )
       )}
     </div>
   );

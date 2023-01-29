@@ -3,11 +3,7 @@ import {
   useEffect,
   useState,
   useContext,
-  ChangeEvent,
-  FormEventHandler,
-  SyntheticEvent,
   ChangeEventHandler,
-  FormEvent,
 } from "react";
 import SelectRegionInput from "../../components/ProfileInputs/SelectRegionInput/SelectRegionInput";
 import styles from "./ProfilePage.module.css";
@@ -25,7 +21,7 @@ const ProfilePage: FC = () => {
   const { state } = useContext<TContext>(AuthContext);
 
   //Стейт для отправки данных формы
-  const [form, setForm] = useState(profileDefaultState);
+  const [form, setForm] = useState<TProfileStateForm>(profileDefaultState);
 
 
   useEffect(() => {

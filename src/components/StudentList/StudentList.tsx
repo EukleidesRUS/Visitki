@@ -1,27 +1,35 @@
 import styles from "./StudentList.module.css";
 import clearIcon from "../../images/clear.png";
-import { useEffect, useState, FC } from "react";
+import {
+  useEffect,
+  useState,
+  FC
+} from "react";
 import { getUsersData, changesUsersData } from "../../utils/api/api";
 import { AddButtonWrapper } from "../AddButtonWrapepr/AddButtonWrapepr";
-import { TUserDataDetail } from "../../utils/types";
+import { TUserDataDetail, TUsersDataDetail } from "../../utils/types";
 
 export const StudentList: FC = (): JSX.Element => {
-  let [studentsArr, setStudentsArr] = useState([]);
-  let [word, handleChange] = useState("");
-  let [result, setResult] = useState([]);
+  let [studentsArr, setStudentsArr] = useState<TUserDataDetail[]>([]);
+  let [word, setWord] = useState("");
+  let [result, setResult] = useState<Array<TUserDataDetail>>([]);
 
   useEffect(() => {
-    getUsersData().then((res) => {
-      let temp: any = [];
-      res.items.map((el: any) => {
-        temp.push(el);
-      });
-      setStudentsArr((studentsArr = temp));
-    }).catch((err) => console.log(`При отправке запроса данных студентов произошла ${err}`));
+    getUsersData()
+      .then((res: TUsersDataDetail) => {
+        let temp: TUserDataDetail[] = [];
+        res.items.map((el) => {
+          temp.push(el);
+        });
+        setStudentsArr(temp);
+      })
+      .catch((err) =>
+        console.log(`При отправке запроса данных студентов произошла ${err}`)
+      );
   }, []);
 
-  const setUserInput = (evt: any) => {
-    handleChange((word = evt.target.value));
+  const setUserInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setWord((word = evt.target.value));
     if (word != "") {
       searchInList();
     }
@@ -32,11 +40,11 @@ export const StudentList: FC = (): JSX.Element => {
   };
 
   const clearSearch = () => {
-    handleChange((word = ""));
+    setWord((word = ""));
   };
-  let temp: any = [];
 
   const searchInList = () => {
+    let temp: Array<TUserDataDetail> = [];
     studentsArr.map((el: TUserDataDetail) => {
       let fake = [];
       fake.push(el.name, el.email, el.cohort);
@@ -48,7 +56,7 @@ export const StudentList: FC = (): JSX.Element => {
         }
       });
     });
-    setResult((result = temp));
+    setResult(temp);
   };
 
   return (

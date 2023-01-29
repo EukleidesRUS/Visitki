@@ -18,7 +18,7 @@ const MainPage = ({ cohort }: { cohort?: string }): JSX.Element => {
   const [cards, setCards] = useState<TCards>({
     users: null,
   });
-  const [usersCities, setCities] = useState<any>(null);
+  const [usersCities, setCities] = useState<{ city: string }[]>([]);
   const sortRef: { current: HTMLDivElement | null } = useRef(null);
   // Открытие/закрытие фильтра
   const filterSet = () => {
@@ -58,12 +58,18 @@ const MainPage = ({ cohort }: { cohort?: string }): JSX.Element => {
   useEffect(() => {
     citiesArray();
     //В будущем здесь должна быть логика отрисовки карточек пользователей выбранной админом когорты
-    getDefaultProfiles().then((res) => {
-      setCards({
-        ...cards,
-        users: res.items,
-      });
-    }).catch((err) => console.log(`При отправке запроса деволтных данных студентов произошла ${err}`));
+    getDefaultProfiles()
+      .then((res) => {
+        setCards({
+          ...cards,
+          users: res.items,
+        });
+      })
+      .catch((err) =>
+        console.log(
+          `При отправке запроса деволтных данных студентов произошла ${err}`
+        )
+      );
   }, [cards]);
 
   useEffect(() => {
@@ -102,7 +108,7 @@ const MainPage = ({ cohort }: { cohort?: string }): JSX.Element => {
           {isOpened && (
             <ul className={styles.mainTownFilterMenu}>
               {usersCities.length > 0 &&
-                usersCities.map((item: any, index: any) => {
+                usersCities.map((item, index) => {
                   return (
                     <li
                       className={styles.mainTownFilterMenuItem}

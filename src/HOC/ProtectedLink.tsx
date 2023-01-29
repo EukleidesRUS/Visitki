@@ -4,11 +4,10 @@ import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../services/AuthContext";
 import { TProtectedLink } from "../utils/types";
 
-const ProtectedLink:FC<TProtectedLink> = ({ children, to, className }): JSX.Element => {
+const ProtectedLink:FC<TProtectedLink> = ({ children, to, className, cardId }): JSX.Element => {
   const location = useLocation();
   //Нужен будет для логики админ или нет
   const { state, setState } = useContext(AuthContext);
-
   const checkAuth = () => {
     const tokenLocal = localStorage.getItem("token") || null;
     //Если токен кончился или отозван, то делается переадресация, при клике на любую ссылку нашего router.

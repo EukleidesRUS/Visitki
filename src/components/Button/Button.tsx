@@ -4,10 +4,9 @@ import styles from "./Button.module.css";
 
 // В кнопку передаем текст и size для смены размеров,
 // largeButton для кнопки входа, smallButton для кнопки выбора файла.
-// Третьим параметром передаем disabled={true/false} 
+// Третьим параметром передаем disabled={true/false}
 
 const Button: FC<TButton> = ({ text, size, disabled, click }): JSX.Element => {
-
   const buttonStyle = (size: string) => {
     const largeButton = styles.largeButton;
     const smallButton = styles.smallButton;
@@ -19,15 +18,13 @@ const Button: FC<TButton> = ({ text, size, disabled, click }): JSX.Element => {
     }
   };
   return (
-    <>
-      <button
-        onClick={click}
-        disabled={disabled}
-        className={`${styles.button} ${buttonStyle(size)}`}
-      >
-        <span className={styles.buttonText}>{text}</span>
-      </button>
-    </>
+    <button
+      onClick={click}
+      disabled={disabled}
+      className={`${styles.button} ${buttonStyle(size)}`}
+    >
+      <span className={styles.buttonText}>{text}</span>
+    </button>
   );
 };
 

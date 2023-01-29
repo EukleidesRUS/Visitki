@@ -20,7 +20,7 @@ const AccountBox: FC = (): JSX.Element => {
           to={state.isAdmin ? "/admin" : `/details/:${state.id}`}
         >
       <div className={styles.accountBoxContainer}>
-        {!state.isAdmin ? (
+        {!state.isAdmin && state.userData ? (
           <img
             className={styles.profilePhoto}
             src={state.userData.profile.photo}
@@ -30,7 +30,7 @@ const AccountBox: FC = (): JSX.Element => {
           <div className={styles.profilePhotoAdmin} />
         )}
         <p className={styles.profileName}>
-          {!state.isAdmin
+          {!state.isAdmin && state.userData
             ? state.userData.profile.name
             : "Панель администратора"}
         </p>

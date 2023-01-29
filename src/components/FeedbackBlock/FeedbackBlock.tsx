@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import styles from "./FeedbackBlock.module.css";
 import {
-  TComment,
   TEmotion,
   TFeedbackBlock,
   TProfileReactions,

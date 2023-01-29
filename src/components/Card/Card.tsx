@@ -1,6 +1,7 @@
 import { FC, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ChatIcon from "../../components/Icons/ChatIcon/ChatIcon";
+import ProtectedLink from "../../HOC/ProtectedLink";
 import { getReactionsData, getUserProfile } from "../../utils/api/api";
 import { TCardProfileData, TCardProps, TProfileID } from "../../utils/types";
 import FeedbackBlock from "../FeedbackBlock/FeedbackBlock";
@@ -37,7 +38,7 @@ const Card: FC<TCardProps> = ({
   return (
     <div className={styles.card}>
       <div className={styles.cardImgContainer}>
-        <Link style={{ display: "flex" }} to={`details/:${id}`}>
+        <Link className={styles.protectedLink} to={`/details/:${id}`}>
           <img className={styles.cardImg} src={img} alt="ProfilePhoto" />
         </Link>
         <FeedbackBlock

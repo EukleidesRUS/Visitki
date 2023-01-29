@@ -18,7 +18,7 @@ const LoginPage: FC = (): JSX.Element => {
     //Данные администратор или нет, а так же id пользователя хардкодим.
     getUserProfile(state.id).then((res: TProfileID) =>
       setState({ ...state, isAuth: true, isAdmin: false, userData: res })
-    ).catch((err) => console.log(`При отправке запроса данных пользователя произошла ${err}`));
+    );
     localStorage.setItem("token", tokenFromHash);
     navigate("/");
   }
@@ -43,7 +43,14 @@ const LoginPage: FC = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    const tokenFromHash = location.hash.split("&")[0].split("=")[1] || null;
+    let tokenFromHash = null;
+    try {
+      tokenFromHash = location.hash.split("&")[0].split("=")[1];
+    } catch {
+      // Не совсем понял, что вы имели ввиду и как это реализовать в моем случае
+      //После ревью уберу комменарий
+    }
+    
     if (tokenFromHash) {
       logIn(tokenFromHash);
     }

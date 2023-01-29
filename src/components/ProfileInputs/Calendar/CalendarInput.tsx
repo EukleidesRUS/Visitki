@@ -35,9 +35,7 @@ export const CalendarInput = ({birthday}: {birthday: string}): JSX.Element => {
   };
 
   const setNewDay = (evt: any) => {
-    console.log(evt);
-    
-    setDay((date = evt.target.value as unknown as number));
+    setDay((date = evt.target.value));
   };
 
   const prepareDays = () => {

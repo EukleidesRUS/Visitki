@@ -1,6 +1,6 @@
 import { SyntheticEvent, useRef, useState } from "react";
 import styles from "./SelectRegionInput.module.css";
-import { Map, YMaps } from "@pbe/react-yandex-maps";
+import { Map } from "@pbe/react-yandex-maps";
 
 function InputSelect(): JSX.Element {
   const selectForRegion = useRef<HTMLInputElement>(null);
@@ -39,14 +39,12 @@ function InputSelect(): JSX.Element {
         onLoad={(ymaps) => loadSuggest(ymaps)}
         ref={selectForRegion}
       />
-      <YMaps>
-        <Map
-          className={styles.map}
-          onLoad={(ymaps) => loadSuggest(ymaps)}
-          defaultState={{ center: [55.751574, 37.573856], zoom: 9 }}
-          modules={["SuggestView"]}
-        />
-      </YMaps>
+      <Map
+        className={styles.map}
+        onLoad={(ymaps) => loadSuggest(ymaps)}
+        defaultState={{ center: [55.751574, 37.573856], zoom: 9 }}
+        modules={["SuggestView"]}
+      />
     </>
   );
 }

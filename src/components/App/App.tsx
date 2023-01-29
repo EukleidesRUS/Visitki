@@ -17,7 +17,7 @@ import { CohortPage } from "../../pages/ChogortPage/ChogortPahe";
 const App: FC = (): JSX.Element => {
   const [state, setState] = useState<TAuth>({
     isAuth: false,
-    isAdmin: true,
+    isAdmin: false,
     id: "2cb3baaa7528a9bb5e2c20d9",
     userData: null,
     theme: null,
@@ -31,7 +31,7 @@ const App: FC = (): JSX.Element => {
     if (tokenLocal) {
       //Записываем данные первого пользователя полученного из массива переданного бекендом
       //Данные администратор или нет, а так же id пользователя хардкодим.
-      getUserProfile("state.id").then((res: TProfileID) =>
+      getUserProfile(state.id).then((res: TProfileID) =>
         setState({ ...state, isAuth: true, isAdmin: false, userData: res })
       ).catch((err) => console.log(`При отправке запроса данных пользователя произошла ${err}`));
     }
