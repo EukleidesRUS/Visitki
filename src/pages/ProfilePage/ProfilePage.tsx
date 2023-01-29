@@ -1,4 +1,14 @@
-import { FC, useEffect, useState, useContext, ChangeEvent } from "react";
+import {
+  FC,
+  useEffect,
+  useState,
+  useContext,
+  ChangeEvent,
+  FormEventHandler,
+  SyntheticEvent,
+  ChangeEventHandler,
+  FormEvent,
+} from "react";
 import SelectRegionInput from "../../components/ProfileInputs/SelectRegionInput/SelectRegionInput";
 import styles from "./ProfilePage.module.css";
 import { ReactComponent as Clip } from "../../images/logo/clip.svg";
@@ -42,7 +52,6 @@ const ProfilePage: FC = () => {
   //     });
   //   }
   // }, [state.userData])
-console.log(state.userData);
 
   useEffect(() => {
     if (state.userData) {
@@ -82,33 +91,69 @@ console.log(state.userData);
     }
   }, [state.userData]);
 
-  const handleChangeInput = (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement> | TProfileStateForm | any
-  ) => {
-    event.preventDefault();
+  //Функция отправки формы
+  const handleFormSubmit = () => {
+    console.log("");
+  };
+
+  const handleChangeInput: ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (event) => {
     if (event.target.name === "telegram") {
-      setForm({ ...form, profile: {...form.profile, telegram: event.target.value} });
+      setForm({
+        ...form,
+        profile: { ...form.profile, telegram: event.target.value },
+      });
     } else if (event.target.name === "github") {
-      setForm({ ...form, profile: {...form.profile, github: event.target.value} });
+      setForm({
+        ...form,
+        profile: { ...form.profile, github: event.target.value },
+      });
     } else if (event.target.name === "status") {
-      setForm({ ...form, info: {...form.info, status: {...form.info.status, text: event.target.value}} });
+      setForm({
+        ...form,
+        info: {
+          ...form.info,
+          status: { ...form.info.status, text: event.target.value },
+        },
+      });
     } else if (event.target.name === "hobby") {
-      setForm({ ...form, info: {...form.info, hobby: {...form.info.hobby, text: event.target.value}} });
+      setForm({
+        ...form,
+        info: {
+          ...form.info,
+          hobby: { ...form.info.hobby, text: event.target.value },
+        },
+      });
     } else if (event.target.name === "edu") {
-      setForm({ ...form, info: {...form.info, edu: {...form.info.edu, text: event.target.value}} });
+      setForm({
+        ...form,
+        info: {
+          ...form.info,
+          edu: { ...form.info.edu, text: event.target.value },
+        },
+      });
     } else if (event.target.name === "job") {
-      setForm({ ...form, info: {...form.info, job: {...form.info.job, text: event.target.value}} });
+      setForm({
+        ...form,
+        info: {
+          ...form.info,
+          job: { ...form.info.job, text: event.target.value },
+        },
+      });
     } else if (event.target.name === "quote") {
-      setForm({ ...form, profile: {...form.profile, quote: event.target.value} });
+      setForm({
+        ...form,
+        profile: { ...form.profile, quote: event.target.value },
+      });
     }
   };
-console.log(form);
 
   return !!state.userData ? (
     <section className={styles.main}>
       <AvatarForm state={state} />
 
-      <form className={styles.form} action="" onSubmit={handleChangeInput}>
+      <form className={styles.form} action="" onSubmit={handleFormSubmit}>
         <div className={styles.input__container}>
           <p className={styles.input__title}> Дата рождения *</p>
           {state.userData && (
@@ -258,6 +303,5 @@ console.log(form);
     </section>
   ) : null;
 };
-
 
 export default ProfilePage;

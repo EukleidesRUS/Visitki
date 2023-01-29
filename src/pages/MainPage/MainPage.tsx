@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect, useContext, SyntheticEvent, ChangeEventHandler } from "react";
 import arrowIcon from "../../icons/arrow_home.svg";
 import styles from "./MainPage.module.css";
 import ProtectedLink from "../../HOC/ProtectedLink";
 import Card from "../../components/Card/Card";
 import { getDefaultProfiles } from "../../utils/api/api";
-import { TCards, TProfileID, TProfileStateForm } from "../../utils/types";
+import { TCards, TProfileID } from "../../utils/types";
 import Preloader from "../../components/Preloader/Preloader";
 import { AuthContext } from "../../services/AuthContext";
 
@@ -32,16 +32,15 @@ const MainPage = ({ cohort }: { cohort?: string }): JSX.Element => {
   //Добавление городов пользователей в список
   let users = cards.users;
 
-  const createCitiesArray = (users: any) => {
+  const createCitiesArray = (users: TProfileID[]) => {
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
-      if(citiesArray.find((city) => city !== user.profile.city.name)){
       citiesArray.push({ city: user.profile.city.name });
-      }
     }
   };
 
-  function searchFilter(users: any) {
+  function searchFilter(users: TProfileID[]) {
+    
     if (selectedItem.selected === "Все города") {
       return users;
     } else {
@@ -59,9 +58,9 @@ const MainPage = ({ cohort }: { cohort?: string }): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    const handleCloseOutsideClick = (evt: any) => {
+    const handleCloseOutsideClick = (evt: Event) => {
       if (sortRef.current) {
-        if (!sortRef.current.contains(evt.target)) {
+        if (!sortRef.current.contains(evt.target as Element)) {
           setIsOpened(false);
         }
       }
@@ -121,7 +120,7 @@ const MainPage = ({ cohort }: { cohort?: string }): JSX.Element => {
         <Preloader />
       ) : (
         <div className={styles.cardContainer}>
-          {searchFilter(users)?.map((cardData: TProfileID) => (
+          {users && searchFilter(users).map((cardData: TProfileID) => (
             <Card
               key={cardData._id}
               id={cardData._id}

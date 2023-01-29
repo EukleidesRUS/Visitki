@@ -19,7 +19,6 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
     data: null,
     reactions: null,
   });
-  console.log(profileData);
   
   //С сервера не приходят данные о теме.
   //Варианты для тестирования "default", "daring", "romantic".
@@ -80,7 +79,6 @@ const ProfileDetailsPage: FC<TProfileDetailsID> = (): JSX.Element => {
       });
     }
   }, [state.theme]);
-  console.log(state);
   
   return (
     <div className={styles.profileDetailsContainer}>
