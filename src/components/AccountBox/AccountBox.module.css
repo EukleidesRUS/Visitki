@@ -1,0 +1,122 @@
+.accountBoxContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 99;
+
+}
+
+.accountBox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 35px 40px 10px;
+  max-width: 296px;
+  width: 100%;
+  min-height: 130px;
+  z-index: 99;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  transition: all 0.2s ease-in-out;
+}
+.accountBox:hover {
+  cursor: url("../../icons/pointer_main.svg"), auto;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 0px 0px 10px 10px;
+  background-color: #FFFFFF;
+}
+.accountBox:hover .accountBoxButton{
+  visibility: visible;
+}
+
+.accountBoxButtons{
+  max-width: 200px;
+  padding: 0 27px 0 27px;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.accountBoxButton {
+  visibility: hidden;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all 0.1s ease-in-out;
+  padding: 10px 0 10px 10px;
+}
+.accountBoxButton:hover{
+  background: #F9F9F9;
+  border-radius: 4px;
+}
+
+
+
+.accountBoxButtonProfile{
+  color: #100C34;
+  margin: 0;
+}
+
+.accountBoxButtonIsAdmin{
+  color: #100C34;
+  margin: 0;
+}
+
+.profilePhoto {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 80%;
+  margin: 0 5px 0 0;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.profilePhotoAdmin {
+  width: 32px;
+  height: 32px;
+  border-radius: 80%;
+  margin: 0 5px 0 0;
+  background-color: gray;
+}
+
+.profileName {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #100c34;
+  margin: 0;
+  max-width: 212px;
+  max-height: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 500px) {
+  .profileName {
+    display: none;
+  }
+  .accountBox {
+    top: 0px;
+    right: 18px;
+    padding: 20px;
+    max-width: 150px;
+    width: 100%;
+    max-height: 80px;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .accountBoxButton {
+    padding-top: 5px;
+  }
+  .accountBoxButtons {
+    flex-direction: column;
+    padding: 40px 10px 0 0;
+  }
+}

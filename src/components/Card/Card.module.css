@@ -1,0 +1,96 @@
+.card {
+  z-index: -1;
+  position: relative;
+  width: 325px;
+  height: 393px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 39px;
+}
+.card:hover .cardImgContainer {
+  outline: 2px solid #ff00a8;
+}
+.card:hover .cardName {
+  color: #ff00a8;
+}
+.card:hover .cardIcon {
+  display: flex;
+}
+
+.protectedLink {
+  display: flex
+}
+
+.cardImgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cardImg {
+  box-sizing: border-box;
+  object-fit: cover;
+  width: 325px;
+  height: 325px;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.cardName {
+  margin: 0;
+  padding: 11px 0 5px;
+  font-size: 20px;
+  line-height: 28px;
+  color: #100c34;
+}
+.cardPlace {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: #a3a3a3;
+}
+.cardIcon {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  transition: all 0.2s ease-in;
+}
+
+
+@media screen and (max-width: 800px) {
+  .card {
+    width: 342px;
+    height: 410px;
+    flex-direction: column;
+    padding: 0 0 24px;
+  }
+  .cardImg {
+    width: 342px;
+    height: 342px;
+  }
+  .cardIcon {
+    display: block;
+    top: 20px;
+    right: 19px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .card {
+    z-index: -1;
+    position: relative;
+    width: 272px;
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 24px;
+  }
+  .cardImg {
+    width: 272px;
+    height: 272px;
+  }
+  .cardIcon {
+    display: block;
+    top: 16px;
+    right: 19px;
+  }
+}

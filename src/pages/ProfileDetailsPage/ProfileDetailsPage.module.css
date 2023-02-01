@@ -1,0 +1,267 @@
+.link {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profileDetailsContainer {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 177px);
+  width: 100%;
+  background-color: #ffffff;
+  padding: 0 40px 0;
+}
+
+.profileDetailsMain {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 440px)) minmax(200px, 325px);
+  column-gap: 70px;
+  grid-template-areas:
+    "name photo status";
+  padding: 8px 0 72px;
+}
+
+.profileDetailsMainInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  max-width: 443px;
+  width: 100%;
+  max-height: 440px;
+}
+.profileDetailsMainInfoName {
+  grid-area: name;
+  color: #100c34;
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 60px;
+  margin: 0 0 97px;
+  letter-spacing: 2.3px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 443px;
+  align-self: center;
+}
+.profileDetailsMainInfoTown {
+  color: #100c34;
+  margin: 0 0 25px 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+.profileDetailsMainInfoIcons {
+  display: flex;
+  justify-content: space-between;
+  max-width: 80px;
+  width: 100%;
+}
+
+.profileDetailsMainInfoImgContainer {
+  grid-area: photo;
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.profileDetailsMainInfoImgContainer:hover .profileDetailsMainInfoChatIcon {
+  visibility: visible;
+}
+
+.profileDetailsMainInfoImg {
+  width: 440px;
+  height: 440px;
+  object-fit: cover;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+.profileDetailsMainInfoImgRomantic {
+  border-radius: 220px;
+}
+
+.profileDetailsMainInfoImgDaring {
+  clip-path: polygon(
+    50% 0%,
+    80% 10%,
+    100% 35%,
+    100% 70%,
+    80% 90%,
+    50% 100%,
+    20% 90%,
+    0% 65%,
+    0% 35%,
+    20% 10%
+  );
+}
+
+.profileDetailsMainInfoChatIcon {
+  visibility: hidden;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
+
+.profileDetailsMainInfoStatus {
+  grid-area: status;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 325px;
+  padding: 36px 0 0 15px;
+  position: relative;
+}
+
+.profileDetailsMainInfoStatusFeedback {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  top: 60px;
+  right: 0px;
+}
+
+.profileDetailsMainInfoStatus:hover .profileDetailsMainInfoStatusIcon {
+  visibility: visible;
+}
+.profileDetailsMainInfoStatusIcon {
+  visibility: hidden;
+  position: absolute;
+  top: 70px;
+  right: 18px;
+}
+.profileDetailsMainInfoStatusText {
+  color: #100c34;
+  margin: 0;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  max-width: 220px;
+  padding-top: 3px;
+}
+.profileDetailsMainInfoColor {
+  color: #ff00a8;
+}
+
+.profileDetailsOther {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 70px;
+  width: 100%;
+  max-width: 1440px;
+}
+
+
+@media screen and (max-width: 1250px) {
+  .profileDetailsContainer {
+    padding: 0 32px 0;
+  }
+  
+  .profileDetailsMain {
+    column-gap: 20px;
+    padding: 8px 0 32px;
+    grid-template-columns: repeat(2, minmax(250px, 342px));
+    grid-template-areas:
+      "name photo"
+      ". status";
+  }
+  
+  .profileDetailsMainInfoStatus {
+    width: 325px;
+    padding: 60px 0 0 5px;
+    position: relative;
+  }
+  .profileDetailsOther {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+  }
+  .profileDetailsMainInfoImg {
+    width: 342px;
+    height: 342px;
+  }
+  .profileDetailsMainInfo {
+    max-width: 295px;
+    width: 100%;
+    max-height: 258px;
+    margin-top: 85px;
+  }
+  .profileDetailsMainInfoName {
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: 2.3px;
+    max-width: 295px;
+    margin: 0 0 107px;
+  }
+  .profileDetailsMainInfoTown {
+    margin: 0 0 25px 0;
+    line-height: 20px;
+  }
+  
+  .profileDetailsMainInfoIcons {
+    max-width: 80px;
+  }
+  .profileDetailsMainInfoChatIcon {
+    visibility: visible;
+  }
+  .profileDetailsMainInfoStatusIcon {
+    visibility: visible;
+    top: 30px;
+    right: -15px;
+  }
+}
+
+@media screen and (max-width: 722px) {
+  .profileDetailsContainer {
+    padding: 0 24px 0;
+    
+  }
+  
+  .profileDetailsMain {
+    column-gap: 32px;
+    padding: 8px 0 32px;
+    grid-template-columns: 272px;
+    grid-template-areas:
+      "name"
+      "photo"
+      "status";
+  }
+
+  .profileDetailsMainInfoName {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 2.3px;
+    max-width: 236px;
+   align-self: flex-start;
+    margin: 0 0 24px;
+  }
+  
+  .profileDetailsMainInfoStatus {
+    width: 272px;
+    padding: 65px 0 0;
+    position: relative;
+  }
+  .profileDetailsOther {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .profileDetailsMainInfoImgContainer {
+    margin-top: 30px;
+  }
+  .profileDetailsMainInfoImg {
+    width: 272px;
+    height: 272px;
+  }
+  .profileDetailsMainInfo {
+    max-width: 272px;
+    max-height: 414px;
+    margin-top: 2px;
+  }
+  .profileDetailsMainInfoStatusIcon {
+    visibility: visible;
+    top: 35px;
+    right: 10px;
+  }
+}
