@@ -1,4 +1,3 @@
-import { Button } from "@pbe/react-yandex-maps";
 import { FC, useState } from "react";
 import { CommentList } from "../CommentList/CommentList";
 import { StudentList } from "../StudentList/StudentList";
@@ -8,11 +7,11 @@ export const Search: FC = ():JSX.Element => {
   let [isUsers, setChange] = useState("students");
 
   const setUsers = () => {
-    setChange((isUsers = "students"));
+    setChange("students");
   };
 
   const setComments = () => {
-    setChange((isUsers = "comments"));
+    setChange("comments");
   };
 
   return (

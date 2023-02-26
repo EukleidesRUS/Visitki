@@ -29,7 +29,7 @@ export const StudentList: FC = (): JSX.Element => {
   }, []);
 
   const setUserInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setWord((word = evt.target.value));
+    setWord(evt.target.value);
     if (word != "") {
       searchInList();
     }
@@ -40,7 +40,7 @@ export const StudentList: FC = (): JSX.Element => {
   };
 
   const clearSearch = () => {
-    setWord((word = ""));
+    setWord("");
   };
 
   const searchInList = () => {
